@@ -23,21 +23,22 @@ public class UserController {
     public String login() {
         return "user/login";
     }
-/*    @PostMapping(value = "/loginPro") // 로그인 로직
+    @PostMapping(value = "/loginPro") // 로그인 로직
     public String loginPro(
         @ModelAttribute UserModel user
         , Model model
         , HttpSession session
         ) {
-        if(user.getPw() == userService.getPass(user.getId())) {
-            session.setAttribute("sId", user.getId());
+        System.out.println(user);
+        if(user.getUser_pass() == userService.getPass(user.getUser_id())) {
+            session.setAttribute("sId", user.getUser_id());
             return "redirect:/";
         } else {
             model.addAttribute("msg", "사용자 정보가 일치하지 않습니다.");
             return "fail_back";
         }
 
-    }*/
+    }
     @GetMapping(value = "/join") // 가입 페이지
     public String join() {
         return "user/join";
@@ -47,7 +48,7 @@ public class UserController {
         @ModelAttribute UserModel user
         , Model model
     ) {
-        userService.userJoin(user);
+        userService.joinPro(user);
         return "redirect:/";
     }
 

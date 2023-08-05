@@ -2,9 +2,12 @@ package com.moon.daltokki.Repository;
 
 import com.moon.daltokki.Model.UserModel;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
 public interface UserRepository extends MongoRepository<UserModel, String> {
-    Optional<UserModel> findById(String id);
+    @Query("SELECT user_pass FROM User WHERE user_id = :user_id")
+    UserModel selectPass(@Param("user_id") String user_id);
 }

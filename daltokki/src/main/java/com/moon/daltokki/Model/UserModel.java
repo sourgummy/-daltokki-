@@ -9,8 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "user")
 public class UserModel {
     // private int idx;
-    private String id;
-    private String pw;
+    private String user_id;
+    private String user_pass;
     private String nickname;
     private String social_login_id;
     private String rabbit_type;
