@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface UserRepository extends MongoRepository<UserModel, String> {
-    @Query("SELECT user_pass FROM User WHERE user_id = :user_id")
-    UserModel selectPass(@Param("user_id") String user_id);
+    @Query("SELECT user_pass FROM user WHERE user_id = :user_id")
+    String selectPass(@Param("user_id") String user_id);
 }

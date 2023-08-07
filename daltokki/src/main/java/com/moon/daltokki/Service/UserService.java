@@ -27,7 +27,7 @@ public class UserService {
   public String getPass(String user_id) { // id로 비밀번호 확인 (로그인)
     System.out.println(user_id);
     String user_pass = "";
-    user_pass += userRepository.selectPass(user_id).getUser_pass();
+    user_pass += userRepository.selectPass(user_id);
     System.out.println(user_pass);
     return user_pass;
   }
