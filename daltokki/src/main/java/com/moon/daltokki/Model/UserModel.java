@@ -1,8 +1,10 @@
 package com.moon.daltokki.Model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
@@ -11,8 +13,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @ToString
 public class UserModel {
     // private int idx;
-    private String user_id;
-    private String user_pass;
+    @Id
+    private String id; // 몽고 db 자동 생성 id
+
+    private String username;
+    private String password;
     private String nickname;
     private String social_login_id;
     private String rabbit_type;
