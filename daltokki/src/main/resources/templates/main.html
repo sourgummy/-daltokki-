@@ -9,8 +9,10 @@
 </head>
 <body>
     메인화면 임니당
+    <!-- 로그인 및 회원가입 시작 -->
     <button sec:authorize="isAnonymous()" onclick="location.href='login'">로그인</button>
     <button sec:authorize="isAuthenticated()" onclick="location.href='logout'">로그아웃</button>
     <button onclick="location.href='join'">회원가입</button>
+    <!-- 로그인 및 회원가입 끝 -->
 </body>
 </html>
