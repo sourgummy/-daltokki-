@@ -27,13 +27,13 @@ public class UserService {
   @Autowired
   MongoTemplate mongoTemplate;
 
-  public String getPass(String username) { // id로 비밀번호 확인 (로그인)
+/*  public String getPass(String username) { // id로 비밀번호 확인 (로그인)
     System.out.println(username);
     String password = "";
     password += userRepository.selectPass(username);
     System.out.println(password);
     return password;
-  }
+  }*/
 
   public void joinPro(UserModel user) { // 회원 가입
     user.setPassword(passwordEncoder.encode(user.getPassword())); // 비밀번호 암호화

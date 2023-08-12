@@ -7,8 +7,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface UserRepository extends MongoRepository<UserModel, String> {
-    @Query("SELECT password FROM user WHERE username = :username")
-    String selectPass(@Param("username") String username);
+    /*@Query("SELECT password FROM user WHERE username = :username")
+    String selectPass(@Param("username") String username);*/
 
-    Optional<UserModel> findByUsername(String username);
+    Optional<UserModel> findByusername(String username);
 }
