@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <title>달토끼>메시지</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        #messageForm {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            width: 60%;
+            margin: 50px auto;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        h2 {
+            color: #555;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 50%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+<body>
+  <h1>여기는 메시지 작성 페이지 입니다</h1>
+  <!-- 송편 옵션 선택 & 메시지 작성 form -->
+
+      <hr>
+
+      <!-- 메시지 작성 폼 -->
+      <div id="messageForm">
+          <h2>메시지 작성 폼</h2>
+          <form id="composeForm" action="/saveMessage" method="post">
+
+              <input type="hidden" id="sp_color" name="sp_color">
+              <input type="hidden" id="sp_type" name="sp_type">
+
+              <h2>송편의 색을 골라주세요</h2>
+                  <!-- button ver -->
+                  <button type="button" value="GREEN" class="sp_color_button">GREEN</button>
+                  <button type="button" value="PINK" class="sp_color_button">PINK</button>
+                  <button type="button" value="WHITE" class="sp_color_button">WHITE</button>
+
+                  <!-- img ver (진행중)-->
+                  <!-- 08/13 이미지 클릭 시 결과페이지로 리턴되는 오류 수정중 -->
+                  <input type="image" src="/img/sp_color_green.png" alt="GREEN" value="GREEN" class="sp_color_img">
+                  <input type="image" src="/img/sp_color_pink.png" alt="PINK" value="PINK" class="sp_color_img">
+                  <input type="image" src="/img/sp_color_white.png" alt="WHITE" value="WHITE" class="sp_color_img">
+              <br><br>
+
+              <h2>송편의 속을 골라주세요</h2>
+                  <button type="button" value="꿀" class="sp_type_button">꿀</button>
+                  <button type="button" value="콩" class="sp_type_button">콩</button>
+                  <button type="button" value="팥" class="sp_type_button">팥</button>
+
+                  <input type="image" src="#" alt="꿀" class="sp_type_button">
+                  <input type="image" src="#" alt="콩" class="sp_type_button">
+                  <input type="image" src="#" alt="팥" class="sp_type_button">
+              <br><br>
+
+              <!-- 메세지 수신자 : hidden 타입으로 넘기기 / 조회만 가능하도록 -->
+              <input type="hidden" id="recipient" name="sp_recipient" >
+              <!-- 메세지 발신자 : hidden 타입으로 넘기기 / JOIN 불가능하기에 중복데이터 필요 -->
+              <input type="hidden" id="senderID" name="sp_senderID" >
+              <label for="sender">보내는 사람(닉네임):</label>
+              <input type="text" id="sender" name="sp_sender">
+              <br><br>
+
+
+              <label for="content">메시지:</label><br>
+              <textarea id="content" name="sp_content" rows="4" cols="50" maxlength="200"
+                        placeholder="즐거운 추석 연휴^^!" >
+              </textarea><br><br>
+
+              <button type="submit">메시지 보내기</button>
+
+
+          </form>
+      </div>
+  <script>
+        $(document).ready(function() {
+            $(".sp_color_button").click(function() {
+                var color = $(this).val();
+                $("#sp_color").val(color);
+            });
+
+            $(".sp_type_button").click(function() {
+                var type = $(this).val();
+                $("#sp_type").val(type);
+            });
+
+              $(".sp_color_img").click(function() {
+                event.preventDefault(); // 이미지 클릭 시 submit되는 오류 해결
+                var color = $(this).attr("value");
+                $("#sp_color").val(color);
+            });
+        });
+    </script>
+</body>
+</html>
