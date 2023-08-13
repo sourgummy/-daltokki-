@@ -9,7 +9,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh; /* body의 높이를 브라우저의 높이로 강제로 맞춰줌 -> body 기준으로 모달 위치 */
-    background-color: black;
+    background-color: white;
     border: 5px solid red;
     /* 별도로 min-width를 설정하지 않으면 modal의 container의 width 사이즈로 나옴 */
 }
@@ -41,12 +41,11 @@ body {
 button {
     border: 2px solid navy;
     padding: 5px;
-    border-radius: 5px;
     background-color: white;
 }
 
 .btn {
     /* margin: 20px; */
     border: 5px solid red;
-    width: 70%;
+    border-radius: 5px;
 }
