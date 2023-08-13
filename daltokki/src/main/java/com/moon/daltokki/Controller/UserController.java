@@ -19,6 +19,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @GetMapping(value = "/")
+    public String index() { return "main"; }
+
     @GetMapping(value = "/login") // 로그인 페이지
     public String login() {
         return "user/login";
