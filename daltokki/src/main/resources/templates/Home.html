@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>달토끼</title>
+    <!-- kakao -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modalStyle.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<script>
+    // 링크 공유 모달 열기
+    function openCopyModal() {
+        $("#ShareModal").modal("show");
+    }
+
+    // css 테스트용 모달 열기
+    function openTestModal() {
+        $("#exampleModalCenter").modal("show");
+    }
+
+    // 복사 기능
+    function CopyLink() {
+        const url = document.getElementById("CopyUrl");
+
+        navigator.clipboard.writeText(url.value); // 주소 복사
+        $("#ShareModal").modal("hide"); // 모달 창 닫기
+    }
+
+    // 카카오 Custom -> 얘는 모달로 안된다고 합니다.
+    try {
+      function sendLinkDefault() {
+        Kakao.init('efbfe79e4b4775d2088ca0e7d9a8edf1')
+        Kakao.Link.sendDefault({
+          objectType: 'feed',
+          content: {
+            title: '달토끼🐰',
+            description: '굶고있는 저에게 최고의 송편을 만들어 주새요😢😢',
+            imageUrl:
+              'http://k.kakaocdn.net/dn/bozSxc/btsp6qTBbFg/rQywrAKm7RY1uAcBbmdqrk/kakaolink40_original.png',
+            link: {
+              mobileWebUrl: 'https://developers.kakao.com',
+              webUrl: 'https://developers.kakao.com',
+            },
+          },
+          buttons: [
+            {
+              title: '웹으로 보기',
+              link: {
+                mobileWebUrl: 'https://developers.kakao.com',
+                webUrl: 'https://developers.kakao.com',
+              },
+            },
+          ],
+        })
+      }
+    ; window.kakaoDemoCallback && window.kakaoDemoCallback() }
+    catch(e) { window.kakaoDemoException && window.kakaoDemoException(e) }
+
+    // 모달 버튼 - 송편 지우기
+    function DeleteSp() {
+<!--         const spId = document.getElementById('#modalSpId').innerText;-->
+         const spId = $('#modalSpId').text(); // 수정된 부분
+
+         $.ajax({
+                type: 'Post',
+                url: 'main/deleteSp',
+                data: { spId: spId },
+                success: function(data) {
+                    alert("송편이 삭제되었슴니당!");
+                    $('.row').load(location.href+' .row');
+                }
+         });
+    }
+
+   // 송편 내용 조회 모달
+   $(document).ready(function() {
+        $('#ContentModal').on('show.bs.modal', function(event) {
+            const spId = $(event.relatedTarget).data('spid');
+            console.log(spId);
+
+            // 송편 내용 ajax로 조회
+            $.ajax({
+                type: 'GET',
+                url: 'main/findSp',
+                data: { spId: spId },
+                success: function(data) {
+                    // 모달 내용 업데이트
+                    console.log(data);
+                    $('#modalLabel').text('송편');
+                    $('#modalSpId').text(data.spId);
+                    $('#modalSpName').text(data.name);
+                    $('#modalSpContent').text(data.content);
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', error);
+                }
+            });
+        });
+    });
+</script>
+<body>
+    <div class="container">
+        <div class="box">
+            <div class="row">
+                <div th:each="sp : ${spList}" class="col-md-4">
+                    <div>
+                        <a href="#" data-toggle="modal" data-target="#ContentModal" th:data-spId="${sp.spId}">
+                            <img src="http://k.kakaocdn.net/dn/bozSxc/btsp6qTBbFg/rQywrAKm7RY1uAcBbmdqrk/kakaolink40_original.png" width="100px" height="100px">
+                        </a>
+                        <a href="#" data-toggle="modal" data-target="#ContentModal" th:text="${sp.name}" th:data-spId="${sp.spId}"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn">
+                <button id="main" onclick="location.href='/'">메인(임시)</button>
+<!--                <button id="write" onclick="location.href='write'">송편 만들기</button>-->
+                <button id="shareKakao" onClick="sendLinkDefault()">카카오 공유</button>
+                <button id="shareLink" onclick="openCopyModal()">링크 공유</button>
+                <button id="googleLogin" onclick="location.href='/login/oauth2/code/{여기아이디를 어케넣음}'">구글 로그인</button>
+                <!------------------miju---------------------------->
+                <!--메시지 작성 페이지로 이동-->
+                <button onclick="location.href='writeMessage'">메시지 작성</button>
+                <!------------------miju---------------------------->
+            </div>
+        </div>
+
+        <!--모달 영역 -->
+        <!-- 링크공유 모달 -->
+        <div id="ShareModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+<!--                <div class="modal-content" style="width: 60%">-->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">링크 공유</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 공유할 URL 입력 폼 -->
+<!--                        <span><img th:src="@{/getQrcode}" alt="QR Code" style="width: 70%; text-align: center;"/></span>-->
+<!--                        <span><input type="text" id="CopyUrl" th:value="${#httpServletRequest.getRequestURL()}" style="width: 100%"></span>-->
+<!--                        <span><img th:src="@{/getQrcode}" alt="QR Code"/></span>-->
+<!--                        <span><input type="text" id="CopyUrl" th:value="${#httpServletRequest.getRequestURL()}"></span>-->
+
+                        <div class="p-4 to-front">
+                            <div class="text-center">
+                                <div class="qr">
+                                    <img th:src="@{main/getQrcode}" alt="QR Code" class="img-fluid mb-4"/>
+                                </div>
+<!--                                <h3>테스트용 모달</h3>-->
+                                <br><p class="mb-4">친구에게 달토끼를 공유하세용!🐰</p>
+                                <form action="#" class="mb-4">
+                                    <div class="form-group">
+                                        <input type="text" id="CopyUrl" class="form-control w-100 mr-3" th:value="${#httpServletRequest.getRequestURL()}">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <button class="btn btn-secondary btn-block" onclick="CopyLink()">복사하기</button>
+                                        </div>
+                                        <div class="col-6">
+                                            <button class="btn btn-primary btn-block" data-dismiss="modal">닫기</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+<!--                        <button type="button" class="btn btn-primary" onclick="CopyLink()">복사하기</button>-->
+<!--                        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>-->
+<!--                        <button type="button" class="btn btn-primary" onclick="CopyLink()" style="width: 40%">복사하기</button>-->
+<!--                        <button type="button" class="btn btn-default" data-dismiss="modal" style="width: 40%">닫기</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 송편 내용 조회 모달 -->
+        <div id="ContentModal" class="modal modal-bottom fade" role="dialog">
+<!--                <div class="modal-dialog modal-fullsize">-->
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+<!--                        <div class="modal-content modal-fullsize">-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">송편</h4>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="DeleteSp()">지우기</button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <span>ID: </span><span id="modalSpId"></span>
+                        </div>
+                        <div>
+                            <span>Name: </span><span id="modalSpName"></span>
+                        </div>
+                        <div>
+                            <span>Content: </span><span id="modalSpContent"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
