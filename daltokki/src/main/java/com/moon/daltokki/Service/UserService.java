@@ -50,4 +50,13 @@ public class UserService {
     userRepository.save(user);
   }
 
+  // ----------------- 지은 -------------------
+  // id 존재 여부 확인
+  public boolean checkIdExists(String id) {
+    log.info("[Service][checkIdExists] Checking if ID exists: {}", id);
+
+    return userRepository.existsByUsername(id);
+  }
+  // ----------------- 지은 -------------------
+
 }
