@@ -17,114 +17,129 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <script>
-    // 링크 공유 모달 열기
-    function openCopyModal() {
-        $("#ShareModal").modal("show");
-    }
+  $(document).ready(function() {
+       // 송편 내용 조회 모달
+       $('#ContentModal').on('show.bs.modal', function(event) {
+           const spId = $(event.relatedTarget).data('spid');
+           console.log(spId);
 
-    // css 테스트용 모달 열기
-    function openTestModal() {
-        $("#exampleModalCenter").modal("show");
-    }
+           // 송편 내용 ajax로 조회
+           $.ajax({
+               type: 'GET',
+               url: 'findSp',
+               data: { spId: spId },
+               success: function(data) {
+                   // 모달 내용 업데이트
+                   console.log(data);
+<!--                    $('#modalLabel').text('송편');-->
+                   $('#modalSpId').text(data.spId);
+                   $('#modalSpName').text(data.spSender);
+                   $('#modalSpContent').text(data.spContent);
+               },
+               error: function(xhr, status, error) {
+                   console.error('송편 조회 모달 AJAX 에러 :', error);
+               }
+           });
+       });
+   });
 
-    // 복사 기능
-    function CopyLink() {
-        const url = document.getElementById("CopyUrl");
+   // 링크 공유 모달 열기
+   function openCopyModal() {
+       $("#ShareModal").modal("show");
+   }
 
-        navigator.clipboard.writeText(url.value); // 주소 복사
-        $("#ShareModal").modal("hide"); // 모달 창 닫기
-    }
+   // css 테스트용 모달 열기
+   function openTestModal() {
+       $("#exampleModalCenter").modal("show");
+   }
 
-    // 카카오 Custom -> 얘는 모달로 안된다고 합니다.
-    try {
-      function sendLinkDefault() {
-        Kakao.init('efbfe79e4b4775d2088ca0e7d9a8edf1')
-        Kakao.Link.sendDefault({
-          objectType: 'feed',
-          content: {
-            title: '달토끼🐰',
-            description: '굶고있는 저에게 최고의 송편을 만들어 주새요😢😢',
-            imageUrl:
-              'http://k.kakaocdn.net/dn/bozSxc/btsp6qTBbFg/rQywrAKm7RY1uAcBbmdqrk/kakaolink40_original.png',
-            link: {
-              mobileWebUrl: 'https://developers.kakao.com',
-              webUrl: 'https://developers.kakao.com',
-            },
-          },
-          buttons: [
-            {
-              title: '웹으로 보기',
-              link: {
-                mobileWebUrl: 'https://developers.kakao.com',
-                webUrl: 'https://developers.kakao.com',
-              },
-            },
-          ],
-        })
-      }
-    ; window.kakaoDemoCallback && window.kakaoDemoCallback() }
-    catch(e) { window.kakaoDemoException && window.kakaoDemoException(e) }
+   // 복사 기능
+   function CopyLink() {
+       const url = document.getElementById("CopyUrl");
 
-    // 모달 버튼 - 송편 지우기
-    function DeleteSp() {
+       navigator.clipboard.writeText(url.value); // 주소 복사
+       $("#ShareModal").modal("hide"); // 모달 창 닫기
+   }
+
+   // 카카오 Custom -> 얘는 모달로 안된다고 합니다.
+   try {
+     function sendLinkDefault() {
+       Kakao.init('efbfe79e4b4775d2088ca0e7d9a8edf1')
+       Kakao.Link.sendDefault({
+         objectType: 'feed',
+         content: {
+           title: '달토끼🐰',
+           description: '굶고있는 저에게 최고의 송편을 만들어 주새요😢😢',
+           imageUrl:
+             'http://k.kakaocdn.net/dn/bozSxc/btsp6qTBbFg/rQywrAKm7RY1uAcBbmdqrk/kakaolink40_original.png',
+           link: {
+             mobileWebUrl: 'https://developers.kakao.com',
+             webUrl: 'https://developers.kakao.com',
+           },
+         },
+         buttons: [
+           {
+             title: '웹으로 보기',
+             link: {
+               mobileWebUrl: 'https://developers.kakao.com',
+               webUrl: 'https://developers.kakao.com',
+             },
+           },
+         ],
+       })
+     }
+   ; window.kakaoDemoCallback && window.kakaoDemoCallback() }
+   catch(e) { window.kakaoDemoException && window.kakaoDemoException(e) }
+
+   // 모달 버튼 - 송편 지우기
+   function DeleteSp() {
 <!--         const spId = document.getElementById('#modalSpId').innerText;-->
-         const spId = $('#modalSpId').text(); // 수정된 부분
+        const spId = $('#modalSpId').text(); // 수정된 부분
 
-         $.ajax({
-                type: 'Post',
-                url: 'main/deleteSp',
-                data: { spId: spId },
-                success: function(data) {
-                    alert("송편이 삭제되었슴니당!");
-                    $('.row').load(location.href+' .row');
-                }
-         });
-    }
-
-   // 송편 내용 조회 모달
-   $(document).ready(function() {
-        $('#ContentModal').on('show.bs.modal', function(event) {
-            const spId = $(event.relatedTarget).data('spid');
-            console.log(spId);
-
-            // 송편 내용 ajax로 조회
-            $.ajax({
-                type: 'GET',
-                url: 'main/findSp',
-                data: { spId: spId },
-                success: function(data) {
-                    // 모달 내용 업데이트
-                    console.log(data);
-                    $('#modalLabel').text('송편');
-                    $('#modalSpId').text(data.spId);
-                    $('#modalSpName').text(data.sp_sender);
-                    $('#modalSpContent').text(data.sp_content);
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX Error:', error);
-                }
-            });
+        $.ajax({
+               type: 'Post',
+               url: 'deleteSp',
+               data: { spId: spId },
+               success: function(data) {
+                   alert("송편이 삭제되었슴니당!");
+                   $('.row').load(location.href+' .row');
+               }
         });
-    });
+   }
 </script>
 <body>
+    <!-- 아이디가 존재하지 않을 때 알림 창을 띄움 -->
+    <div th:if="${idNotExist}">
+        <script>
+            window.onload = function() {
+                alert("공유 주소를 다시 확인해주세요!🥕");
+
+                // 알림이 안뜨고 넘어가는 경우가 있어서 0.2초 지연
+                setTimeout(function() {
+                    location.href = "/";
+                }, 200);
+            };
+        </script>
+    </div>
+
     <div class="container">
-        <h1 th:inline="text"><span th:text="${#authentication.name}"></span>님의 메인</h1>
+        <!-- 이렇게 하면 익명의 사용자가 접속했을때는 anonymousUser 이렇게 뜸 -->
+<!--        <h1 th:inline="text"><span th:text="${#authentication.name}"></span>님의 메인</h1>-->
+        <h1 th:inline="text"><span th:text="${param.id}"></span>님의 메인</h1>
         <div class="box">
             <div class="row">
                 <div th:each="sp : ${spList}" class="col-md-4" style="text-align:center">
-                        <a href="#" data-toggle="modal" data-target="#ContentModal" th:data-spId="${sp.spId}">
-                            <!-- DB에 저장된 sp_color에 맞는 이미지 표시 -->
-                            <img th:src="@{'/img/SP_' + ${sp.sp_color} + '.png'}" width="100px" height="100px">
-                        </a>
-                        <a href="#" data-toggle="modal" data-target="#ContentModal" th:text="${sp.sp_sender}" th:data-spId="${sp.spId}"></a>
+                    <a href="#" data-toggle="modal" data-target="#ContentModal" th:data-spId="${sp.spId}">
+                        <!-- DB에 저장된 spColor에 맞는 이미지 표시 -->
+                        <img th:src="@{'/img/SP_' + ${sp.spColor} + '.png'}" width="100px" height="100px">
+                        <span th:text="${sp.spSender}"></span>
+                    </a>
                 </div>
             </div>
         </div>
 
         <div class="btn">
-            <button id="main" onclick="location.href='/'">메인(임시)</button>
-<!--                <button id="write" onclick="location.href='write'">송편 만들기</button>-->
+<!--            <button id="main" onclick="location.href='/'">메인(임시)</button>-->
             <button id="shareKakao" onClick="sendLinkDefault()">카카오 공유</button>
             <button id="shareLink" onclick="openCopyModal()">링크 공유</button>
             <button id="googleLogin" onclick="location.href='/login/oauth2/code/{여기아이디를 어케넣음}'">구글 로그인</button>
@@ -149,13 +164,13 @@
                         <div class="p-4 to-front">
                             <div class="text-center">
                                 <div class="qr">
-                                    <img th:src="@{main/getQrcode}" alt="QR Code" class="img-fluid mb-4"/>
+                                    <img th:src="@{getQrcode}" alt="QR Code" class="img-fluid mb-4"/>
                                 </div>
 <!--                                <h3>테스트용 모달</h3>-->
                                 <br><p class="mb-4">친구에게 달토끼를 공유하세용!🐰</p>
                                 <form action="#" class="mb-4">
                                     <div class="form-group">
-                                        <input type="text" id="CopyUrl" class="form-control w-100 mr-3" th:value="${#httpServletRequest.getRequestURL()}">
+                                        <input type="text" id="CopyUrl" class="form-control w-100 mr-3" th:value="${#httpServletRequest.getRequestURL()} + '?' + ${#httpServletRequest.getQueryString()}">
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
