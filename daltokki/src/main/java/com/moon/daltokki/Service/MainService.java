@@ -14,20 +14,10 @@ import java.util.List;
 public class MainService {
 
     @Autowired
-    SpRepository spRepository;
+    private SpRepository spRepository;
 
     // ~~model 연결~~
     SpModel sp = new SpModel();
-
-//    public void saveSp(String name, String writer, String content) {
-    public void saveSp(String name, String content) {
-        sp.setName(name);
-//        sp.setWriter(writer);
-        sp.setContent(content);
-
-        spRepository.save(sp);
-        log.info("[Service][saveSp] sp insert success!!");
-    }
 
     // 송편 조회 (임시니까 일단 전체 목록 조회)
     public List<SpModel> selectSpList() {

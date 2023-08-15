@@ -1,7 +1,7 @@
 package com.moon.daltokki.Controller;
 
-import com.moon.daltokki.Model.MessageModel;
-import com.moon.daltokki.Service.MessageService;
+import com.moon.daltokki.Model.SpModel;
+import com.moon.daltokki.Service.SpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Slf4j
 @Controller
-public class MessageController {
+public class SpController {
 
     //  ----------------------------------------------------------------------------  miju
 /*    <송편쓰기 - 메시지 작성 파트>
@@ -26,24 +26,24 @@ public class MessageController {
            -> "재물복이 깃든 꿀을 넣었다"
 */
     @Autowired
-    MessageService messageService;
-
+    SpService spService;
 
     // 메시지 작성 페이지로 이동
-    @GetMapping(value = "/writeMessage")
+    @GetMapping(value = "/writeSp")
     public String openMessagePage(Model model) {
-        model.addAttribute("message", new MessageModel()); // 빈 MessageModel 객체를 모델에 추가
+        model.addAttribute("sp", new SpModel()); // 빈 MessageModel 객체를 모델에 추가
 
         return "message/writeMessage";
     }
 
     // db에 메시지 저장
-    @PostMapping("/saveMessage")
-    public String saveMessage(@ModelAttribute("message") MessageModel message, Model model) {
-        messageService.saveMessage(message);
-        model.addAttribute("message", message);
-
-        return "message/result";
+    @PostMapping("/saveSp")
+    public String saveSp(@ModelAttribute("sp") SpModel sp, Model model) {
+        spService.saveSp(sp);
+        model.addAttribute("sp", sp);
+        
+        // result.jsp 삭제하고 /main 매핑되도록 수정 - 지은
+        return "redirect:main";
     }
 
 

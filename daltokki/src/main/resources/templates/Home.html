@@ -97,8 +97,8 @@
                     console.log(data);
                     $('#modalLabel').text('송편');
                     $('#modalSpId').text(data.spId);
-                    $('#modalSpName').text(data.name);
-                    $('#modalSpContent').text(data.content);
+                    $('#modalSpName').text(data.sp_sender);
+                    $('#modalSpContent').text(data.sp_content);
                 },
                 error: function(xhr, status, error) {
                     console.error('AJAX Error:', error);
@@ -109,30 +109,31 @@
 </script>
 <body>
     <div class="container">
+        <h1 th:inline="text"><span th:text="${#authentication.name}"></span>님의 메인</h1>
         <div class="box">
             <div class="row">
-                <div th:each="sp : ${spList}" class="col-md-4">
-                    <div>
+                <div th:each="sp : ${spList}" class="col-md-4" style="text-align:center">
                         <a href="#" data-toggle="modal" data-target="#ContentModal" th:data-spId="${sp.spId}">
-                            <img src="http://k.kakaocdn.net/dn/bozSxc/btsp6qTBbFg/rQywrAKm7RY1uAcBbmdqrk/kakaolink40_original.png" width="100px" height="100px">
+                            <!-- DB에 저장된 sp_color에 맞는 이미지 표시 -->
+                            <img th:src="@{'/img/SP_' + ${sp.sp_color} + '.png'}" width="100px" height="100px">
                         </a>
-                        <a href="#" data-toggle="modal" data-target="#ContentModal" th:text="${sp.name}" th:data-spId="${sp.spId}"></a>
-                    </div>
+                        <a href="#" data-toggle="modal" data-target="#ContentModal" th:text="${sp.sp_sender}" th:data-spId="${sp.spId}"></a>
                 </div>
             </div>
-
-            <div class="btn">
-                <button id="main" onclick="location.href='/'">메인(임시)</button>
-<!--                <button id="write" onclick="location.href='write'">송편 만들기</button>-->
-                <button id="shareKakao" onClick="sendLinkDefault()">카카오 공유</button>
-                <button id="shareLink" onclick="openCopyModal()">링크 공유</button>
-                <button id="googleLogin" onclick="location.href='/login/oauth2/code/{여기아이디를 어케넣음}'">구글 로그인</button>
-                <!------------------miju---------------------------->
-                <!--메시지 작성 페이지로 이동-->
-                <button onclick="location.href='writeMessage'">메시지 작성</button>
-                <!------------------miju---------------------------->
-            </div>
         </div>
+
+        <div class="btn">
+            <button id="main" onclick="location.href='/'">메인(임시)</button>
+<!--                <button id="write" onclick="location.href='write'">송편 만들기</button>-->
+            <button id="shareKakao" onClick="sendLinkDefault()">카카오 공유</button>
+            <button id="shareLink" onclick="openCopyModal()">링크 공유</button>
+            <button id="googleLogin" onclick="location.href='/login/oauth2/code/{여기아이디를 어케넣음}'">구글 로그인</button>
+            <!------------------miju---------------------------->
+            <!--메시지 작성 페이지로 이동-->
+            <button onclick="location.href='writeSp'">메시지 작성</button>
+            <!------------------miju---------------------------->
+        </div>
+    </div>
 
         <!--모달 영역 -->
         <!-- 링크공유 모달 -->
@@ -145,12 +146,6 @@
                         <h4 class="modal-title">링크 공유</h4>
                     </div>
                     <div class="modal-body">
-                        <!-- 공유할 URL 입력 폼 -->
-<!--                        <span><img th:src="@{/getQrcode}" alt="QR Code" style="width: 70%; text-align: center;"/></span>-->
-<!--                        <span><input type="text" id="CopyUrl" th:value="${#httpServletRequest.getRequestURL()}" style="width: 100%"></span>-->
-<!--                        <span><img th:src="@{/getQrcode}" alt="QR Code"/></span>-->
-<!--                        <span><input type="text" id="CopyUrl" th:value="${#httpServletRequest.getRequestURL()}"></span>-->
-
                         <div class="p-4 to-front">
                             <div class="text-center">
                                 <div class="qr">
