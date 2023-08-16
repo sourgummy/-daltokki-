@@ -52,15 +52,14 @@ public class MainController {
         boolean isIdExists = userService.checkIdExists(id);
         
         if (!isIdExists) { // 존재하지 않을때
-            model.addAttribute("idNotExist", true);
+            return "error/error"; // error.html로 이동
         } else { // 존재하면 송편 목록 조회
             List<SpModel> spList = mainService.selectSpList(id);
 
             model.addAttribute("spList", spList);
             log.info("[MainController][main] spList : {}", spList);
+            return "Home";
         }
-
-        return "Home";
     }
 
     // 개별 송편 조회

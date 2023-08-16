@@ -14,6 +14,11 @@ body {
     /* 별도로 min-width를 설정하지 않으면 modal의 container의 width 사이즈로 나옴 */
 }
 
+/* 모달창 열릴때 스크롤바X */
+body.modal-open {
+    overflow: hidden;
+    padding-right: 0 !important; /* 필요한 경우에만 적용되는 패딩 제거 */
+}
 
 /* 화면 중앙에 위치하도록 하는 요소 */
 .container {
