@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>myStatistics</title>
+</head>
+<body>
+<!--  알림 : 나한테 쌓인 송편 몇개인지
+통계 : 어떤앙꼬가 몇개 어떤색송편이 몇개-->
+<!--  <h1 th:text="${userId}">userId</h1>-->
+  <hr>
+  <h3>송편</h3>
+    <table>
+      <tr>
+        <th>종류</th>
+        <th>갯수</th>
+      </tr>
+      <tr>
+        <td>콩</td>
+        <td th:text="${sp.spTypeCount1}"></td>
+      </tr>
+      <tr>
+        <td>팥</td>
+        <td th:text="${sp.spTypeCount2}"></td>
+      </tr>
+      <tr>
+        <td>꿀</td>
+        <td th:text="${sp.spTypeCount3}"></td>
+      </tr>
+    </table>
+  <hr>
+  <h3>앙꼬</h3>
+    <table>
+      <tr>
+        <th>종류</th>
+        <th>갯수</th>
+      </tr>
+      <tr>
+        <td>흰</td>
+        <td th:text="${sp.spColorCount1}"></td>
+      </tr>      <tr>
+        <td>핑</td>
+        <td th:text="${sp.spColorCount2}"></td>
+      </tr>      <tr>
+        <td>쑥</td>
+        <td th:text="${sp.spColorCount3}"></td>
+      </tr>      <tr>
+        <td>무지개</td>
+        <td th:text="${sp.spColorCount4}"></td>
+      </tr>
+    </table>
+</body>
+</html>
