@@ -78,13 +78,8 @@
 </script>
 <body>
     <div class="container">
-        <!-- 이렇게 하면 익명의 사용자가 접속했을때는 anonymousUser 이렇게 뜸 -->
-<!--        <h1 th:inline="text"><span th:text="${#authentication.name}"></span>님의 메인</h1>-->
         <h1 th:inline="text"><span th:text="${param.id}"></span>님의 메인</h1>
         <div class="box">
-            <!-- Thymeleaf를 사용하여 idNotExist 값을 data-idNotExist 속성에 삽입 -->
-<!--            <div id="idNotExist" th:attr="data-idNotExist=${idNotExist}"></div>-->
-            <div id="idNotExist" th:attr="data-idNotExist=${idNotExist} ? true : false"></div>
             <div class="row">
                 <div th:each="sp : ${spList}" class="col-md-4" style="text-align:center">
                     <a href="#" data-toggle="modal" data-target="#ContentModal" th:data-spId="${sp.spId}">
@@ -98,13 +93,13 @@
         </div>
 
         <div class="btn">
-<!--            <button id="main" onclick="location.href='/'">메인(임시)</button>-->
-            <button id="shareKakao" onClick="sendLinkDefault()">카카오 공유</button>
-            <button id="shareLink" onclick="openCopyModal()">링크 공유</button>
+            <!-- 본인의 송편 페이지면 링크 버튼 출력-->
+            <button th:if="${#strings.equals(#authentication.name, param.id)}" id="shareKakao" onClick="sendLinkDefault()">카카오 공유</button>
+            <button th:if="${#strings.equals(#authentication.name, param.id)}" id="shareLink" onclick="openCopyModal()">링크 공유</button>
             <button id="googleLogin" onclick="location.href='/login/oauth2/code/{여기아이디를 어케넣음}'">구글 로그인</button>
             <!------------------miju---------------------------->
-            <!--메시지 작성 페이지로 이동-->
-            <button onclick="location.href='writeSp'">메시지 작성</button>
+            <!-- 본인의 송편 페이지가 아니면 송편 작성 버튼 출력-->
+            <button th:if="${!#strings.equals(#authentication.name, param.id)}" onclick="location.href='writeSp'">메시지 작성</button>
             <!------------------miju---------------------------->
         </div>
     </div>
@@ -114,7 +109,6 @@
     <div id="ShareModal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-<!--                <div class="modal-content" style="width: 60%">-->
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">링크 공유</h4>
@@ -125,7 +119,6 @@
                             <div class="qr">
                                 <img th:src="@{getQrcode}" alt="QR Code" class="img-fluid mb-4"/>
                             </div>
-<!--                                <h3>테스트용 모달</h3>-->
                             <br><p class="mb-4">친구에게 달토끼를 공유하세용!🐰</p>
                             <form action="#" class="mb-4">
                                 <div class="form-group">
@@ -156,9 +149,7 @@
 
     <!-- 송편 내용 조회 모달 -->
     <div id="ContentModal" class="modal modal-bottom fade" role="dialog">
-<!--                <div class="modal-dialog modal-fullsize">-->
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-<!--                        <div class="modal-content modal-fullsize">-->
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">송편</h4>
@@ -185,33 +176,19 @@
 <!-- script -->
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var currentUserId = /*[[${#authentication.name}]]*/ ''; // 현재 사용자의 아이디
-        var paramId = /*[[${param.id}]]*/ ''; // param.id 값
+        const currentUserId = /*[[${#authentication.name}]]*/ ''; // 현재 사용자의 아이디
+        const paramId = /*[[${param.id}]]*/ ''; // param.id 값
         /*]]>*/
 
         console.log(currentUserId);
         console.log(paramId);
 
         $(document).ready(function() {
-            // 아이디가 존재하지 않을 때 알림 창을 띄움
-<!--            var idNotExist = $('#idNotExist').data('idnotexist');-->
-            var idNotExist = document.getElementById('idNotExist').getAttribute('data-idNotExist');
-            alert(idNotExist);
-
-            // 아이디가 존재하지 않을 때 알림 창 띄우기
-            if (idNotExist === true) {
-                alert("공유 주소를 다시 확인해주세요!🥕");
-                // 알림이 안뜨고 넘어가는 경우가 있어서 0.2초 지연
-                setTimeout(function() {
-                    location.href = "/";
-                }, 200);
-            }
-
             // 송편 내용 조회 모달
             $('#ContentModal').on('show.bs.modal', function(event) {
-                // currentUserId와 paramId를 사용하여 비교 및 알림창 띄우기
-                if (currentUserId !== paramId) {
-                    alert("현재 사용자의 아이디와 다른 아이디입니다.");
+                // 로그인 아이디(currentUserId)와 paramId를 비교해 일치하는 유저만 송편을 조회할 수 있게 제어
+                if (currentUserId != paramId) {
+                    alert(paramId + " 토끼만 읽을 수 있어요!🐰");
                     return false;
                 }
 
