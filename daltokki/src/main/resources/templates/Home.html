@@ -66,6 +66,8 @@
            {
              title: '웹으로 보기',
              link: {
+               // 여기서 직접 수정
+               // 이
                mobileWebUrl: 'https://developers.kakao.com',
                webUrl: 'https://developers.kakao.com',
              },
@@ -79,6 +81,7 @@
 <body>
     <div class="container">
         <h1 th:inline="text"><span th:text="${param.id}"></span>님의 메인</h1>
+        <img th:src="@{'/img/' + ${userInfo.get().rabbit_type} + '.png'}" width="100px" height="100px">
         <div class="box">
             <div class="row">
                 <div th:each="sp : ${spList}" class="col-md-4" style="text-align:center">
@@ -117,7 +120,7 @@
                     <div class="p-4 to-front">
                         <div class="text-center">
                             <div class="qr">
-                                <img th:src="@{getQrcode}" alt="QR Code" class="img-fluid mb-4"/>
+                                <img th:src="@{getQrcode(id=${param.id})}" alt="QR Code" class="img-fluid mb-4"/>
                             </div>
                             <br><p class="mb-4">친구에게 달토끼를 공유하세용!🐰</p>
                             <form action="#" class="mb-4">
