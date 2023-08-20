@@ -18,9 +18,10 @@ public class UserModel {
     private String username;
     private String password;
     private String nickname;
-    private String social_login_id;
-    private String rabbit_type;
     private int sp_record;
     private String login_type;
+    private String rabbit_type;
+    //    private String social_login_id; // 사용자 id 는 username으로 통합
+
 
 }
