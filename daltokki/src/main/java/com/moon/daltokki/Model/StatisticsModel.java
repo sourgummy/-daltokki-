@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "msg")
 public class StatisticsModel {
   private String spToName;
+  private String spFromName;
   private int spType;
   private int spTypeCount1;
   private int spTypeCount2;

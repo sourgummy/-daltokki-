@@ -1,17 +1,22 @@
 package com.moon.daltokki.Controller;
 
-import com.moon.daltokki.Model.SpModel;
+import com.google.gson.JsonArray;
 import com.moon.daltokki.Model.StatisticsModel;
 import com.moon.daltokki.Service.StatisticsService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.json.JsonObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +28,7 @@ public class StatisticsController {
   StatisticsService statisticsService;
 
   @GetMapping (value = "/myStatistics")
-  public String myStatistics(Model model)
+  public String myStatistics(Model model, @RequestParam String name)
   {
     // httpsession으로 id 받아와서 db 조회해서 뿌리기!!!! => 지금안됨
     // , @SessionAttribute String userId
@@ -31,7 +36,6 @@ public class StatisticsController {
     // 아이디,송편,앙꼬 보내기~
 
 //    model.addAttribute(userId, "userId");
-    String name = "yeramii"; //임시
     List<StatisticsModel> spList = statisticsService.selectStatistics(name);
     int spTypeCount1 = 0;
     int spTypeCount2 = 0;
@@ -60,6 +64,7 @@ public class StatisticsController {
     }
 
     StatisticsModel sp = new StatisticsModel();
+    sp.setSpToName(name);
     sp.setSpTypeCount1(spTypeCount1);
     sp.setSpTypeCount2(spTypeCount2);
     sp.setSpTypeCount3(spTypeCount3);
@@ -73,4 +78,32 @@ public class StatisticsController {
     return "message/myStatistics";
   }
 
+  @ResponseBody
+  @GetMapping(value = "/ajaxAlarm")
+  public void alarm(Model model, HttpServletResponse response, @RequestParam String spId){
+    List<StatisticsModel> newList = statisticsService.selectStatistics(spId);
+
+    JSONArray jsonArray = new JSONArray();
+
+    for(StatisticsModel sModel : newList){
+      System.out.println(sModel);
+      JSONObject jsonObject = new JSONObject();
+
+      jsonObject.put("spFromName", sModel.getSpFromName());
+
+      jsonArray.add(jsonObject);
+    }
+    System.out.println(jsonArray.size());
+    System.out.println(jsonArray.toJSONString());
+    try {
+      response.setCharacterEncoding("UTF-8");
+      response.getWriter().print(jsonArray);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+
+
+
+  }
 }
