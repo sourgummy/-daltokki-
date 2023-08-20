@@ -1,7 +1,5 @@
 package com.moon.daltokki.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moon.daltokki.Model.UserModel;
 import com.moon.daltokki.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +8,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 @Slf4j
@@ -56,6 +53,13 @@ public class UserService {
     log.info("[Service][checkIdExists] Checking if ID exists: {}", id);
 
     return userRepository.existsByUsername(id);
+  }
+
+  // 사용자의 정보 조회
+  public Optional<UserModel> selectUserInfo(String id) {
+    log.info("[Service][selectUserInfo] selected username : {}", id);
+
+    return userRepository.findByusername(id);
   }
   // ----------------- 지은 -------------------
 
