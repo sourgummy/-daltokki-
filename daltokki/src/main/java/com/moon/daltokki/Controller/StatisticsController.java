@@ -1,10 +1,8 @@
 package com.moon.daltokki.Controller;
 
-import com.google.gson.JsonArray;
 import com.moon.daltokki.Model.StatisticsModel;
 import com.moon.daltokki.Service.StatisticsService;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.json.JsonObject;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
