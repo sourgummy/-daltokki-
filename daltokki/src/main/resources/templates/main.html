@@ -17,8 +17,10 @@
     <!-- 로그인 및 회원가입 시작 -->
     <button sec:authorize="isAnonymous()" onclick="location.href='login'" class="btn-hover color-3">달토끼 로그인</button>
     <button sec:authorize="isAuthenticated()" onclick="location.href='logout'" class="btn-hover color-3">로그아웃</button>
+    <button sec:authorize="isAnonymous()" onclick="location.href='join'" class="btn-hover color-3">회원가입</button>
     <!-- 네이버아이디로로그인 버튼 노출 영역 -->
     <div id="naver_id_login"></div>
+    <button sec:authorize="isAnonymous()" onclick="location.href='/oauth2/authorization/kakao'">카카오 로그인</button>
     <!-- 로그인 및 회원가입 끝 -->
 
 <!--    임시로 홈화면 들어가는 버튼-->
