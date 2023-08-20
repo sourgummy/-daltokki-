@@ -11,81 +11,33 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
-    <h1>달토끼</h1>
-    <div class="image-container">
-    <img src="/img/daltokki2.png" width="250" height="250"></div>
-    <!-- 로그인 및 회원가입 시작 -->
-    <button sec:authorize="isAnonymous()" onclick="location.href='login'" class="btn-hover color-3">달토끼 로그인</button>
-    <button sec:authorize="isAuthenticated()" onclick="location.href='logout'" class="btn-hover color-3">로그아웃</button>
-    <button sec:authorize="isAnonymous()" onclick="location.href='join'" class="btn-hover color-3">회원가입</button>
-    <!-- 네이버아이디로로그인 버튼 노출 영역 -->
-    <div id="naver_id_login"></div>
-    <button sec:authorize="isAnonymous()" onclick="location.href='/oauth2/authorization/kakao'">카카오 로그인</button>
-    <!-- 로그인 및 회원가입 끝 -->
-
-<!--    임시로 홈화면 들어가는 버튼-->
-    <button onclick="location.href='main'" class="btn-hover color-3">HOME</button>
-    <button id="naverLoginBtn" class="btn-hover color-3">(test) profile response</button>
+    <div class="container">
+        <h1>달토끼</h1>
+        <div class="image-container">
+        <img src="/img/daltokki2.png" width="250" height="250"></div>
+        <!-- 로그인 및 회원가입 시작 -->
+        <button sec:authorize="isAnonymous()" onclick="location.href='login'" class="btn-hover color-3">달토끼 로그인</button>
+        <button sec:authorize="isAuthenticated()" onclick="location.href='logout'" class="btn-hover color-3">로그아웃</button>
+        <button sec:authorize="isAnonymous()" onclick="location.href='join'" class="btn-hover color-3">회원가입</button>
+        <!-- 네이버아이디로로그인 버튼 노출 영역 -->
+        <div id="naver_id_login"></div>
+        <button sec:authorize="isAnonymous()" onclick="location.href='/oauth2/authorization/kakao'" class="btn-hover color-3">카카오 로그인</button>
+        <button sec:authorize="isAnonymous()" onclick="location.href='/oauth2/authorization/google'" class="btn-hover color-3">Google (테스트)</button>
+        <!-- 로그인 및 회원가입 끝 -->
+        <button id="naverLoginBtn" class="btn-hover color-3">(test) profile response</button>
+    </div>
 
 <style>
-    body{
-    background-color: #212539;
-    border:none;
-    }
-    h1{
-    color: white;
-    }
-
     * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     }
 
-    .buttons {
-        margin: 10%;
-        text-align: center;
-    }
-
-    .btn-hover {
-        width: 200px;
-        font-size: 17px;
-        font-weight: 200;
-        font-family: 'NeoDunggeunmoPro-Regular';
-        color: #fff;
-        cursor: pointer;
-        margin: 20px;
-        height: 55px;
-        text-align:center;
-        border: none;
-        background-size: 300% 100%;
-
-        border-radius: 50px;
-        moz-transition: all .4s ease-in-out;
-        -o-transition: all .4s ease-in-out;
-        -webkit-transition: all .4s ease-in-out;
-        transition: all .4s ease-in-out;
-    }
-
-    .btn-hover:hover {
-        background-position: 100% 0;
-        moz-transition: all .4s ease-in-out;
-        -o-transition: all .4s ease-in-out;
-        -webkit-transition: all .4s ease-in-out;
-        transition: all .4s ease-in-out;
-    }
-
-    .btn-hover:focus {
-        outline: none;
-    }
-    .btn-hover.color-3 {
-        background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
-        box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
-    }
     .image-container {
         padding: 20px;
       }
-    </style>
+</style>
 
     <!-- 네아로 -->
     <script type="text/javascript">
@@ -107,8 +59,6 @@
             // 현재 창에서 해당 URL로 리다이렉트
             window.location.href = authUrl;
         });
-
     </script>
-
 </body>
 </html>

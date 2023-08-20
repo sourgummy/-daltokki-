@@ -79,11 +79,10 @@
 
         <div class="btn">
             <!-- 본인의 송편 페이지면 링크 버튼 출력-->
-            <button th:if="${#strings.equals(#authentication.name, param.id)}" id="shareKakao" onClick="sendLinkDefault()">카카오 공유</button>
-            <button th:if="${#strings.equals(#authentication.name, param.id)}" id="shareLink" onclick="openCopyModal()">링크 공유</button>
-            <button id="googleLogin" onclick="location.href='/login/oauth2/code/google'">구글 로그인</button>
+            <button th:if="${#strings.equals(#authentication.name, param.id)}" id="shareKakao" onClick="sendLinkDefault()" class="btn-hover color-3">카카오 공유</button>
+            <button th:if="${#strings.equals(#authentication.name, param.id)}" id="shareLink" onclick="openCopyModal()" class="btn-hover color-3">링크 공유</button>
             <!-- 본인의 송편 페이지가 아니면 송편 작성 버튼 출력-->
-            <button th:if="${!#strings.equals(#authentication.name, param.id)}" id="goToWriteSpButton">메시지 작성</button>
+            <button th:if="${!#strings.equals(#authentication.name, param.id)}" id="goToWriteSpButton" class="btn-hover color-3">메시지 작성</button>
             <input type="hidden" id="hiddenIdInput" name="id" th:value="${param.id}">
         </div>
     </div>
@@ -108,32 +107,27 @@
                                 <div class="form-group">
                                     <input type="text" id="CopyUrl" class="form-control w-100 mr-3" th:value="${#httpServletRequest.getRequestURL()} + '?' + ${#httpServletRequest.getQueryString()}">
                                 </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <button class="btn btn-secondary btn-block" onclick="CopyLink()">복사하기</button>
-                                    </div>
-                                    <div class="col-6">
-                                        <button class="btn btn-primary btn-block" data-dismiss="modal">닫기</button>
-                                    </div>
-                                </div>
                             </form>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
-<!--                        <button type="button" class="btn btn-primary" onclick="CopyLink()">복사하기</button>-->
-<!--                        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>-->
-<!--                        <button type="button" class="btn btn-primary" onclick="CopyLink()" style="width: 40%">복사하기</button>-->
-<!--                        <button type="button" class="btn btn-default" data-dismiss="modal" style="width: 40%">닫기</button>-->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-secondary" onclick="CopyLink()" style="color: #212539;">복사하기</button>
+                                <button class="btn btn-primary" data-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- 송편 내용 조회 모달 -->
-    <div id="ContentModal" class="modal modal-bottom fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div id="ContentModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">송편</h4>
@@ -204,13 +198,15 @@
 <!--     alert("https://developers.kakao.com/main?id=" + encodeURIComponent(paramId));-->
 <!--     alert(window.location.href);-->
 
+        <!-- 초기화는 한번만 되야하므로 함수 밖에서 초기화 함 -->
+         Kakao.init('efbfe79e4b4775d2088ca0e7d9a8edf1')
+
          function sendLinkDefault() {
-           Kakao.init('efbfe79e4b4775d2088ca0e7d9a8edf1')
            Kakao.Link.sendDefault({
              objectType: 'feed',
              content: {
                title: '달토끼🐰',
-               description: '배고픈 토끼에게 최고의 송편을 만들어 주새요😢😢',
+               description: '배고픈 토끼에게 최고의 송편을 만들어 주세요😢😢',
                imageUrl:
                  'http://k.kakaocdn.net/dn/bozSxc/btsp6qTBbFg/rQywrAKm7RY1uAcBbmdqrk/kakaolink40_original.png',
                link: {

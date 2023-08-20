@@ -23,34 +23,6 @@
     border: 3px solid red;
 }
 
-.modal-dialog.modal-fullsize {
-  width: 80%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.modal-content.modal-fullsize {
-  height: auto;
-  min-height: 100%;
-  border-radius: 0;
-}
-
-
-/* 모달 바닥에 고정 -> 스크롤 생김 */
-.modal.modal-bottom .modal-dialog {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    transform: translate(0, 100%);
-    transition: transform 0.3s ease-out;
-}
-
-.modal.modal-bottom.show .modal-dialog {
-    transform: translate(0, 0);
-}
 /* 하단에 뜨는건 맞는데
 1. 하단에 모달이 별개로 위치가 고정되면서 스크롤이 생김 -> 굳이 하단에 둬야할까
 2. 모달도 반응형으로 해야함 -> 애초에 반응형이 필요한..가? CSS는 모바일 화면을 기준으로?
@@ -60,10 +32,4 @@
 /* 스크롤 방지 스타일 */
 body.modal-open {
     overflow: hidden;
-}
-
-/* 모달 크기에 따라 스크롤 설정 */
-.modal.modal-bottom.show .modal-dialog {
-    max-height: calc(100% - 56px); /* 56px는 모달의 헤더 높이에 따라 조절하십시오 */
-    overflow-y: auto;
 }
