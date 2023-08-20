@@ -71,7 +71,7 @@
       <!-- 메시지 작성 폼 -->
       <div id="messageForm">
           <h2>메시지 작성 폼</h2>
-          <form id="composeForm" action="/saveMessage" method="post">
+          <form id="composeForm" action="/saveSp" method="post">
 
               <input type="hidden" id="sp_color" name="sp_color">
               <input type="hidden" id="sp_type" name="sp_type">
@@ -84,9 +84,9 @@
 
                   <!-- img ver (진행중)-->
                   <!-- 08/13 이미지 클릭 시 결과페이지로 리턴되는 오류 수정중 -->
-                  <input type="image" src="/img/sp_color_green.png" alt="GREEN" value="GREEN" class="sp_color_img">
-                  <input type="image" src="/img/sp_color_pink.png" alt="PINK" value="PINK" class="sp_color_img">
-                  <input type="image" src="/img/sp_color_white.png" alt="WHITE" value="WHITE" class="sp_color_img">
+                  <input type="image" src="/img/SP_GREEN.png" alt="GREEN" value="GREEN" class="sp_color_img">
+                  <input type="image" src="/img/SP_PINK.png" alt="PINK" value="PINK" class="sp_color_img">
+                  <input type="image" src="/img/SP_WHITE.png" alt="WHITE" value="WHITE" class="sp_color_img">
               <br><br>
 
               <h2>송편의 속을 골라주세요</h2>
@@ -100,7 +100,7 @@
               <br><br>
 
               <!-- 메세지 수신자 : hidden 타입으로 넘기기 / 조회만 가능하도록 -->
-              <input type="hidden" id="recipient" name="sp_recipient" >
+              <input type="hidden" id="recipient" name="sp_recipient">
               <!-- 메세지 발신자 : hidden 타입으로 넘기기 / JOIN 불가능하기에 중복데이터 필요 -->
               <input type="hidden" id="senderID" name="sp_senderID" >
               <label for="sender">보내는 사람(닉네임):</label>
