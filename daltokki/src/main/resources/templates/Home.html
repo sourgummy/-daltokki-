@@ -77,6 +77,20 @@
      }
    ; window.kakaoDemoCallback && window.kakaoDemoCallback() }
    catch(e) { window.kakaoDemoException && window.kakaoDemoException(e) }
+
+    // ----------------------miju(08/18 추가)-------------------------------
+    // DOM 로딩이 완료되면 실행될 함수
+    document.addEventListener("DOMContentLoaded", function() {
+        var goToWriteSpButton = document.getElementById("goToWriteSpButton");
+        var hiddenIdInput = document.getElementById("hiddenIdInput");
+
+        goToWriteSpButton.addEventListener("click", function() {
+            var id = hiddenIdInput.value;
+            var url = 'writeSp?id=' + encodeURIComponent(id);
+            location.href = url;
+        });
+    });
+    // ----------------------miju(08/18 추가)-------------------------------
 </script>
 <body>
     <div class="container">
@@ -100,10 +114,11 @@
             <button th:if="${#strings.equals(#authentication.name, param.id)}" id="shareKakao" onClick="sendLinkDefault()">카카오 공유</button>
             <button th:if="${#strings.equals(#authentication.name, param.id)}" id="shareLink" onclick="openCopyModal()">링크 공유</button>
             <button id="googleLogin" onclick="location.href='/login/oauth2/code/{여기아이디를 어케넣음}'">구글 로그인</button>
-            <!------------------miju---------------------------->
+            <!------------------miju(08/18 수정)---------------------------->
             <!-- 본인의 송편 페이지가 아니면 송편 작성 버튼 출력-->
-            <button th:if="${!#strings.equals(#authentication.name, param.id)}" onclick="location.href='writeSp'">메시지 작성</button>
-            <!------------------miju---------------------------->
+            <button th:if="${!#strings.equals(#authentication.name, param.id)}" id="goToWriteSpButton">메시지 작성</button>
+            <input type="hidden" id="hiddenIdInput" name="id" th:value="${param.id}">
+            <!------------------miju(08/18 수정)---------------------------->
         </div>
     </div>
 
