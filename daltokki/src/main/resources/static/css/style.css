@@ -1,5 +1,18 @@
-/* 전체 화면을 꽉 채우는 검은 바탕 설정 */
-/* scaffolding.less 파일이 우선으로 먹히고있음 -> 부트스트랩 */
+/* 폰트 */
+@font-face {
+    font-family: 'NeoDunggeunmoPro-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'NeoDunggeunmoPro-Regular';
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
 
 body {
     margin: 0; /* 필수 */
@@ -9,8 +22,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh; /* body의 높이를 브라우저의 높이로 강제로 맞춰줌 -> body 기준으로 모달 위치 */
-    background-color: #212539;
-    border: 5px solid red;
+    background-image: url('/img/page.png');
     /* 별도로 min-width를 설정하지 않으면 modal의 container의 width 사이즈로 나옴 */
 }
 
@@ -28,8 +40,7 @@ body.modal-open {
     justify-content: center;
     flex-direction: column; /* 가로축 영향 -> align-items */
     align-items: center;
-    background-color: #fffee0;
-    border: 5px solid red;
+    background-color: #212539;
 }
 
 /* 중앙에 위치한 박스의 스타일 설정 */
@@ -38,34 +49,51 @@ body.modal-open {
     width: 100%
     height: 100%;
     /* padding: 20px; */
-    background-color: #fffee0;
+    background-color: #212539;
     border: 5px solid blue;
 }
 
-/* 아나 인텔리제이 css 불편해 */
-button {
-    border: 2px solid navy;
-    border-radius : 5px;
-    padding: 5px;
-    background-color: white;
-}
+/* 버튼 */
 
-.btn {
-    /* margin: 20px; */
-    border: 5px solid red;
-    border-radius: 5px;
-}
-
- @font-face {
-    font-family: 'NeoDunggeunmoPro-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
-
-* {
-    font-family: 'NeoDunggeunmoPro-Regular'; /* 폰트 적용 */
+.buttons {
+    margin: 10%;
     text-align: center;
-    margin: 0;
-    padding: 0;
 }
+
+.btn-hover {
+    width: 200px;
+    font-size: 17px;
+    font-weight: 200;
+    font-family: 'NeoDunggeunmoPro-Regular';
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 50px;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+    outline: none;
+}
+.btn-hover.color-3 {
+    background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
+    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+}
+
+/* 버튼 끝 */
