@@ -59,6 +59,19 @@ public class MainController {
             Optional<UserModel> userInfo = userService.selectUserInfo(id);
             List<SpModel> spList = mainService.selectSpList(id);
 
+            int spRecord =  userInfo.get().getSpRecord();
+            // 임시 테스트로 1/3/5개로 설정
+            log.info("[MainController][main] record : {}", spRecord);
+            if(5 > spRecord && spRecord >= 3) {
+                String rabbitType = userInfo.get().getRabbitType().substring(0, 2) + 2;
+                log.info("[MainController][main] rabbitType : {}", rabbitType);
+                userService.updateRabbitType(rabbitType);
+            } else if(spRecord >= 5) {
+                String rabbitType = userInfo.get().getRabbitType().substring(0, 2) + 3;
+                log.info("[MainController][main] rabbitType : {}", rabbitType);
+                userService.updateRabbitType(rabbitType);
+            }
+
             model.addAttribute("userInfo", userInfo);
             model.addAttribute("spList", spList);
             log.info("[MainController][main] userInfo : {}", userInfo);
@@ -118,14 +131,6 @@ public class MainController {
 
         return null;
     }
-
-    // 구글 로그인
-    @GetMapping(value = "/googleLogin")
-    public String getOuthUrl() {
-
-        return "Home";
-    }
-
     // ---------------------- 지은 -------------------------
 
 }

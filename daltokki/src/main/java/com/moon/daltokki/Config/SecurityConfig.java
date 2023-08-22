@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder; // 비밀�
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+  // 얘를 어디서부터 손봐야하지..
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http

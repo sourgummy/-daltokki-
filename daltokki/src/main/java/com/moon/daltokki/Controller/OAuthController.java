@@ -1,5 +1,6 @@
 package com.moon.daltokki.Controller;
 
+import com.moon.daltokki.Service.OAuthService;
 import com.moon.daltokki.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -10,9 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @Controller
@@ -45,8 +44,20 @@ public class OAuthController {
         String.class
     );
     return "accessToken: " + accessTokenResponse.getBody();
-
     }
+
+  // ----------------- 지은 0822 -------------------
+
+    @Autowired
+    private OAuthService oAuthService;
+
+    @GetMapping("/login/oauth2/code/{registrationId}")
+    public String googleLogin(@RequestParam String code, @PathVariable String registrationId) {
+      oAuthService.GoogleSocialLogin(code, registrationId);
+
+      return "main?id=" + registrationId;
+    }
+  // ----------------- 지은 0822 -------------------
 }
 
 
