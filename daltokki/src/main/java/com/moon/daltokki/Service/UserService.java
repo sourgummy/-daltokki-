@@ -40,9 +40,9 @@ public class UserService {
     Collections.shuffle(rabbit_list);
     rabbit_list.toArray(rabbit_array);
     String rabbit = rabbit_array[0];
-    user.setRabbit_type(rabbit); // 토끼 유형 세팅
-    user.setSp_record(0); // 송편 개수 0
-    user.setLogin_type("D"); // 기본 가입 유형 "D"
+    user.setRabbitType(rabbit); // 토끼 유형 세팅
+    user.setSpRecord(0); // 송편 개수 0
+    user.setLoginType("D"); // 기본 가입 유형 "D"
     System.out.println(user);
     userRepository.save(user);
   }
@@ -62,5 +62,24 @@ public class UserService {
     return userRepository.findByusername(id);
   }
   // ----------------- 지은 -------------------
+
+  // ----미주 다녀감(08/23)-------------------------------------
+
+    // **** Sp_record 변수명 표기법 변경 시 아래의 코드도 변경해야함 ****
+    // 메시지 작성 시 수신자의 spRecord에 +1
+    public void incrementSpRecord(String username) {
+      // log.info("[UserService][incrementSpRecord] checked username : {}", username);
+      UserModel user = userRepository.findByusername(username).orElse(null);
+      // log.info("[UserService][incrementSpRecord] user info checked : {}", user);
+
+      if (user != null) {
+        user.setSpRecord(user.getSpRecord() + 1);
+        // log.info("[UserService][incrementSpRecord] get spRecord : {}", user.getSp_record());
+        userRepository.save(user);
+        log.info("[UserService][incrementSpRecord] spRecord saved successfully");
+      }
+    }
+
+  // ----미주 다녀감(08/23)-------------------------------------
 
 }

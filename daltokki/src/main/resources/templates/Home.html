@@ -52,18 +52,23 @@
         var goToWriteSpButton = document.getElementById("goToWriteSpButton");
         var hiddenIdInput = document.getElementById("hiddenIdInput");
 
-        goToWriteSpButton.addEventListener("click", function() {
-            var id = hiddenIdInput.value;
-            var url = 'writeSp?id=' + encodeURIComponent(id);
-            location.href = url;
-        });
+        // 버튼이 존재하는 경우에만 이벤트 리스너 등록하도록 수정(08/23)
+        if (goToWriteSpButton) {
+
+            goToWriteSpButton.addEventListener("click", function() {
+                var id = hiddenIdInput.value;
+                var url = 'writeSp?id=' + encodeURIComponent(id);
+                location.href = url;
+            });
+
+        }
     });
     // ----------------------miju(08/18 추가)-------------------------------
 </script>
 <body>
     <div class="container">
         <h1 th:inline="text"><span th:text="${param.id}"></span>님의 메인</h1>
-        <img th:src="@{'/img/' + ${userInfo.get().rabbit_type} + '.png'}" width="100px" height="100px">
+        <img th:src="@{'/img/' + ${userInfo.get().rabbitType} + '.png'}" width="100px" height="100px">
         <div class="box">
             <div class="row">
                 <div th:each="sp : ${spList}" class="col-md-4" style="text-align:center">
