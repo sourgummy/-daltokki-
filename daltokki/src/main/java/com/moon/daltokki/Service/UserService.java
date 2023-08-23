@@ -62,13 +62,6 @@ public class UserService {
     return userRepository.findByusername(id);
   }
 
-  // 토끼타입 갱신
-//  public String updateRabbitType(String rabbitType) {
-  public void updateRabbitType(String rabbitType) {
-    log.info("[Service][selectUserInfo] updateRabbitType : {}", rabbitType);
-
-//    return userRepository.saverabbitType(rabbitType); // 오류나서 수정해야함
-  }
   // ----------------- 지은 -------------------
 
 }

@@ -63,7 +63,9 @@
 <body>
     <div class="container">
         <h1 th:inline="text"><span th:text="${param.id}"></span>님의 메인</h1>
-        <img th:src="@{'/img/' + ${userInfo.get().rabbitType} + '.png'}" width="100px" height="100px">
+<!--        <img th:src="@{'/img/' + ${userInfo.get().rabbitType} + '.png'}" width="100px" height="100px">-->
+<!--        누끼를 안따서 임시로 jpg 파일로 대체-->
+        <img th:src="@{'/img/' + ${userInfo.get().rabbitType} + '.jpg'}" width="100px" height="100px">
         <div class="box">
             <div class="row">
                 <div th:each="sp : ${spList}" class="col-md-4" style="text-align:center">

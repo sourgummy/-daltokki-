@@ -14,10 +14,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -39,7 +36,7 @@ public class OAuthService {
 //        System.out.println("registrationId = " + registrationId);
 //    }
 
-    public boolean GoogleSocialLogin(String code, String registrationId) {
+    public UserModel GoogleSocialLogin(String code, String registrationId) {
         String accessToken = getAccessToken(code, registrationId);
         JsonNode userResourceNode = getUserResource(accessToken, registrationId);
         System.out.println("userResourceNode = " + userResourceNode);
@@ -52,7 +49,6 @@ public class OAuthService {
         System.out.println("nickname = " + nickname);
 
         UserModel user = new UserModel();
-        boolean isUser = false;
 
         if(!userRepository.existsByEmail(email)) { // 동일한 이메일이 없으면 DB에 신규 등록
             // username, password, nickname, sp_record, login_type, rabbit_type
@@ -61,18 +57,24 @@ public class OAuthService {
             Collections.shuffle(rabbit_list);
             rabbit_list.toArray(rabbit_array);
             String rabbit = rabbit_array[0];
+            String[] emailSplit = email.split("@");
+            String email2 = emailSplit[0];
+//            String[] email2 = email.split("@");
 
-            user.setUsername(id); // 회원 아이디
+            log.info("[Service][GoogleSocialLogin] email2 : {}", email2);
+            user.setUsername(email2); // 회원 아이디 (여기에 이메일을 저장해야하나..?)
+//            user.setUsername(id);
             user.setNickname(nickname); // 닉네임
             user.setRabbitType(rabbit); // 토끼 유형 세팅
+            user.setEmail(email); // 구글 로그인 이메일
             user.setSpRecord(0); // 송편 개수 0
-            user.setLoginType("G"); // 기본 가입 유형 "D"
+            user.setLoginType("G"); // 구글 가입 유형 "G"
             System.out.println(user);
             userRepository.save(user);
         } else {
-            isUser = true;
+            // 로그인 처리는 좀 더 생각해보자ㅇ..
         }
-        return isUser;
+        return user;
     }
 
     private String getAccessToken(String authorizationCode, String registrationId) {

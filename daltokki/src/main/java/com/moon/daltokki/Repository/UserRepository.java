@@ -17,7 +17,4 @@ public interface UserRepository extends MongoRepository<UserModel, String> {
     // 해당 아이디/이메일이 DB에 존재하는지 확인 - 지은
     boolean existsByUsername(String username);
     boolean existsByEmail(String email);
-
-    // 토끼타입 갱신 - 지은
-//    String saverabbitType(String rabbitType);
 }

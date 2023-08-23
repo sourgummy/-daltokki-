@@ -1,7 +1,9 @@
 package com.moon.daltokki.Controller;
 
+import com.moon.daltokki.Model.UserModel;
 import com.moon.daltokki.Service.OAuthService;
 import com.moon.daltokki.Service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,11 +16,12 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+@Slf4j
 @Controller
-@ResponseBody
 public class OAuthController {
    @Autowired
     private UserService userService; // UserService 주입
+
   @GetMapping("/oauth/login")
   @ResponseBody
   public String naverOAuthRedirect(@RequestParam String code, @RequestParam String state, Model model) {
@@ -46,17 +49,27 @@ public class OAuthController {
     return "accessToken: " + accessTokenResponse.getBody();
     }
 
-  // ----------------- 지은 0822 -------------------
-
     @Autowired
     private OAuthService oAuthService;
 
     @GetMapping("/login/oauth2/code/{registrationId}")
+    // 여기서 code가 안넘어와서 오류나는데 이건 제ㅏ가 발급하는게 아니에요 선생님ㅜㅜ.. api 일안하냐..
     public String googleLogin(@RequestParam String code, @PathVariable String registrationId) {
-      oAuthService.GoogleSocialLogin(code, registrationId);
+      UserModel user = oAuthService.GoogleSocialLogin(code, registrationId); // 여기서 저장한거아냐?
+      log.info("[OAuthController][googleLogin] user : {}", user);
+      String GoogleLoginId = user.getUsername();
+      log.info("[OAuthController][googleLogin] GoogleLoginId : {}", GoogleLoginId);
 
-      return "main?id=" + registrationId;
+      return "main?id=" + GoogleLoginId;
+//      return "main";
     }
+
+    // 이동 테스트
+    @GetMapping("oauth/redirect")
+    public String test() {
+      return "main";
+    }
+
   // ----------------- 지은 0822 -------------------
 }
 
