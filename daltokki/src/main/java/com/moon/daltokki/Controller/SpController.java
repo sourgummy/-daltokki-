@@ -28,7 +28,8 @@ public class SpController {
         1. (진행예정)메시지 다 작성하고 금지어 n개 확인 후 있으면 고치라고 alert 및 색깔 변경
         2. eventListener 무조건 실행되는 것 방지(완료)
         3. 메시지 작성 완료 시 수신자 user테이블에 spRecode +1 (완료)
-        4. (진행중)한 user 테이블에 보내는 사람 닉네임은 중복 방지 (ajax로 확인하여 아이디처럼 중복방지 문구 및 사용 금지)
+        4. 한 user 테이블에 보내는 사람 닉네임은 중복 방지 (완료)
+            -> ajax로 wrtieMessage.html에서 중복확인
         5. 메시지 일부항목 미선택 및 미입력시 폼제출 불가 (완료)
         6. 메시지 작성 완료 시 이동하는 매핑주소 수정 (완료)
 
@@ -66,10 +67,10 @@ public class SpController {
         return "redirect:main?id="+ sp.getSpRecipient();
     }
 
-    // (8/23)해당 user의 송편을 작성한 발신자 닉네임 중복여부 체크 - (진행중)
+    // (8/23)해당 user의 송편을 작성한 발신자 닉네임 중복여부 체크
     @PostMapping("/checkDuplicateSender")
-    public ResponseEntity<Boolean> checkDuplicateSender(@PathVariable String spSender) {
-        log.info("[SpController][checkDuplicateSender] 넘어온 닉네임 : {}", spSender);
+    public ResponseEntity<Boolean> checkDuplicateSender(@RequestParam String spSender) {
+        // log.info("[SpController][checkDuplicateSender] 넘어온 닉네임 : {}", spSender);
         return ResponseEntity.ok(spService.isSenderDuplicate(spSender));
     }
 
