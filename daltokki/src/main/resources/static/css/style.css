@@ -53,6 +53,10 @@ body.modal-open {
     border: 5px solid blue;
 }
 
+input {
+    color: #212539;
+}
+
 /* 버튼 */
 
 .buttons {

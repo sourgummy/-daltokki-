@@ -14,6 +14,7 @@ public interface UserRepository extends MongoRepository<UserModel, String> {
 
     Optional<UserModel> findByusername(String username);
 
-    // 해당 아이디가 DB에 존재하는지 확인 - 지은
+    // 해당 아이디/이메일이 DB에 존재하는지 확인 - 지은
     boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
 }
