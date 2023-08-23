@@ -46,6 +46,7 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5' // Spring Security
 //	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE' // Spring Security
 //	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:2.6.2' // sns 로그인
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // sns 로그인
 	implementation 'org.springframework.boot:spring-boot-starter-validation' // 유효성 검사
 
 	//qrcode module dependencies 추가
