@@ -23,6 +23,10 @@
         <div id="naver_id_login"></div>
         <button sec:authorize="isAnonymous()" onclick="location.href='/oauth2/authorization/kakao'" class="btn-hover color-3">카카오 로그인</button>
         <button sec:authorize="isAnonymous()" onclick="location.href='/oauth2/authorization/google'" class="btn-hover color-3">Google (테스트)</button>
+        <button sec:authorize="isAnonymous()" onclick="location.href='http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:8080/oauth/redirect'" class="btn-hover color-3">Google (테스트2)</button>
+<!--        code 파라미터 X-->
+<!--        https://accounts.google.com/o/oauth2/auth?client_id=915921592597-00dhkg1tfbu2imhqst4mpolrj3tjer8h.apps.googleusercontent.com&redirect_uri=http://localhost:8080/login/oauth2/code/google&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile-->
+        <button sec:authorize="isAnonymous()" onclick="location.href='/login/oauth2/code/google'" class="btn-hover color-3">Google (테스트2)</button>
         <!-- 로그인 및 회원가입 끝 -->
         <button id="naverLoginBtn" class="btn-hover color-3">(test) profile response</button>
     </div>

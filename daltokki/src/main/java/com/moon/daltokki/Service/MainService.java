@@ -3,6 +3,7 @@ package com.moon.daltokki.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.moon.daltokki.Model.SpModel;
 import com.moon.daltokki.Repository.SpRepository;
+import com.moon.daltokki.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,9 @@ public class MainService {
 
     @Autowired
     private SpRepository spRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     // ~~model 연결~~
     SpModel sp = new SpModel();
