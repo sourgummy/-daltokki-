@@ -36,5 +36,5 @@ out/
 ### VS Code ###
 .vscode/
 
-### 클라이언트 id와 passwd가 포함된 파일이 git에 올라가지 않도록 함 ###
-application-oauth.properties
+### 클라이언트 id와 passwd가 포함된 파일이 git에 올라가지 않도록 함 우선 주석처리 해둘게용 ###
+#application-oauth.properties
