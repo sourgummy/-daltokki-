@@ -19,10 +19,11 @@ public class StatisticsService {
         statisticsRepository.save(message);
     }
 
-    public List<StatisticsModel> selectStatistics(String name){
+    public List<StatisticsModel> selectStatistics(String id){
+        log.info("id : " + id);
         log.info("~~~~DDARAN~~~~");
 
-        return statisticsRepository.findBySpToName(name);
+        return statisticsRepository.findBySpRecipient(id);
     }
 
 

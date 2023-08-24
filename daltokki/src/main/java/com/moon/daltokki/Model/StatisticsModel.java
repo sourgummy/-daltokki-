@@ -6,15 +6,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@Document(collection = "msg")
+@Document(collection = "sp")
 public class StatisticsModel {
-  private String spToName;
-  private String spFromName;
-  private int spType;
+  private String spRecipient; // id
+  private String spSender;
+  private String spType;
   private int spTypeCount1;
   private int spTypeCount2;
   private int spTypeCount3;
-  private int spColor;
+  private String spColor;
   private int spColorCount1;
   private int spColorCount2;
   private int spColorCount3;
