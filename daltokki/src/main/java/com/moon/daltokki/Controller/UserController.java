@@ -98,4 +98,32 @@ public class UserController {
     }
     // -----------------------------------------
 
+
+    //--------------hj 네아로 관련 -----------------------------
+
+     // 네아로1111
+//    @RequestMapping(value="/oauth/login", method= RequestMethod.GET)
+//    public String loginPOSTNaver(HttpSession session) {
+//        log.info("callback controller");
+//        return "user/callback";
+//    }
+//     // 네이버 아이디로 로그인
+//    @RequestMapping(value="/login", method= RequestMethod.GET)
+//    public String Nlogin() {
+//        log.info("home controller");
+//        return "APIExamNaverLogin";
+//    }
+
+
+    // 네아로
+//    @GetMapping("/oauth/login")
+//    public String naverOAuthRedirect(@RequestParam String code, @RequestParam String state, Model model) {
+//        // 네이버 로그인 처리 로직
+//        User user = userService.handleNaverLogin(code, state);
+//        return "redirect:/main";
+//    }
+//}
+
+    //-----------------네아로 끝------------------------------
+
 }

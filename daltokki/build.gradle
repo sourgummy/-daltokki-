@@ -65,7 +65,12 @@ dependencies {
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 	// gson
 	implementation 'com.google.code.gson:gson:2.9.0'
-}
+
+	//소셜로그인 등 클라이언트에서 필요한 의존성
+//	 implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	// jpa
+//	 implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    }
 
 
 tasks.named('test') {
