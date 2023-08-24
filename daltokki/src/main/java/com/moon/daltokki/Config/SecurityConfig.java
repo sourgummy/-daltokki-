@@ -24,8 +24,8 @@ public class SecurityConfig {
   @Autowired
   OAuthService oAuthService;
 
-  @Autowired
-  PrincipalOauth2UserService principalOauth2UserService;
+//  @Autowired
+//  PrincipalOauth2UserService principalOauth2UserService;
 
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -47,16 +47,15 @@ public class SecurityConfig {
                 .loginPage("/login")
                 .defaultSuccessUrl("/loginSuccess")
         )
-        .oauth2Login(oauth2Login ->
-            oauth2Login
-                .loginPage("/login")
-//                .defaultSuccessUrl("/login/oauth2/code/google") // login?error로 매핑됨
-                .defaultSuccessUrl("loginSuccess") // login?error로 매핑됨
-                .failureUrl("/loginForm")		// 로그인 실패 시 /loginForm으로 이동
-                .userInfoEndpoint()			// 로그인 성공 후 사용자정보를 가져온다
-                .userService(principalOauth2UserService);	//사용자정보를 처리할 때 사용한다
-//
-        )
+//        .oauth2Login(oauth2Login ->
+//            oauth2Login
+//                .loginPage("/login")
+////                .defaultSuccessUrl("/login/oauth2/code/google") // login?error로 매핑됨
+//                .defaultSuccessUrl("loginSuccess") // login?error로 매핑됨
+//                .failureUrl("/loginForm")		// 로그인 실패 시 /loginForm으로 이동
+//                .userInfoEndpoint()			// 로그인 성공 후 사용자정보를 가져온다
+//                .userService(principalOauth2UserService)	//사용자정보를 처리할 때 사용한다
+//        )
         .logout(logout ->
             logout
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
