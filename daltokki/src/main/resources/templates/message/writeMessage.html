@@ -2,6 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title>달토끼>메시지</title>
 
@@ -126,7 +128,7 @@
         console.log(textBoxValue);
 
         var forbidden = [
-          '젠장', '즐' , '빠큐' , '뻐큐' , '씨발', '새끼', '개새끼', '엿먹어', '엿', 'ㅗ', '제길',
+          '젠장', '즐 ' , '빠큐' , '뻐큐' , '씨발', '새끼', '개새끼', '엿먹어', '엿', 'ㅗ', '제길',
           '씨이', '씨ㅂ','씨ㅍ','씹','앂','쌰ㅂ','씨플','씳알','씻','쓰불','쓰발','쓰볼','쓰봘',
           '쒸이빨','쓰벵','쓰벙','씌빵','씌뱅','씌붕','쓰뻥','씨뱅아'
         ];
@@ -140,7 +142,43 @@
 
         $(this).val(textBoxValue);
       });
-    });
+
+
+
+      // (08/23)수신자의 spSender에 중복되는 닉네임 있는지 확인작업 - 진행중
+
+      $("#sender").on("keyup", function() {
+        var spSenderValue = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "/checkDuplicateSender",
+            data: { spSender: spSenderValue }, // 데이터를 객체로 전달
+            success: function(response) {
+                if (response) {
+                    $("#senderStatus").text("이미 사용 중인 닉네임입니다.");
+                    $("#submitButton").prop("disabled", true); // 폼 제출 막기
+
+                    // #submitButton의 클릭 이벤트 핸들러 등록
+                     $("#submitButton").on("click", function(event) {
+                        event.preventDefault(); // 폼 제출 막기
+                        alert("닉네임을 수정하세요!");
+                        $("#sender").focus();
+                    });
+
+                } else {
+                    $("#senderStatus").text(""); // 중복되지 않은 경우 메시지 초기화
+                    $("#submitButton").prop("disabled", false); // 폼 제출 가능
+
+                     // 클릭 이벤트 핸들러 제거
+                     $("#submitButton").off("click");
+                }
+            },
+            error: function() {
+                alert("서버 에러 발생");
+            }
+        }); // ajax
+      }); // #sender.onKeyup();
+    }); // document.ready();
 
     // 08/20 추가 -------------------글자 수 체크 x -> 바이트 수 체크 o
     </script>
@@ -150,7 +188,7 @@
 
     <!-- 메시지 작성 폼 -->
     <div id="messageForm">
-        <form id="composeForm" action="/saveSp" method="post">
+        <form id="composeForm" action="/saveSp" method="post" onsubmit="return validateForm();">
 
             <input type="hidden" id="spColor" name="spColor">
             <input type="hidden" id="spType" name="spType">
@@ -194,6 +232,7 @@
                     </td>
                     <td colspan="3">
                         <input type="text" id="sender" name="spSender">
+                        <span id="senderStatus" style="color: red;"></span>
                     </td>
 
                 </tr>
@@ -212,78 +251,96 @@
                 </tr>
                 <tr>
                     <td colspan="5">
-                        <button type="submit">메시지 보내기</button>
+                        <button type="submit" id="submitButton">메시지 보내기</button>
                     </td>
                 </tr>
             </table>
         </form>
     </div>
     <script>
-            // 이미지 클릭 시 value값 넘기는 스크립트
-            $(document).ready(function() {
 
-                var selectedSpTypeImg = null; // 선택된 송편 타입 이미지를 저장하는 변수
-                var originalSpTypeSrc = null; // 선택된 송편 타입 이미지의 원래 src 값을 저장하는 변수
+        // (08/23 추가) 메시지 작송 폼 내부의 전체항목 미입력시 폼 제출 막기
+        function validateForm() {
+            var spColor = $("#spColor").val();
+            var spType = $("#spType").val();
+            var spSender = $("#sender").val();
+            var spContent = $("#spContent_byteLimit").val();
 
-                $(".sp_type_img").click(function() {
-                    event.preventDefault(); // 이미지 클릭 시 submit되는 오류 해결
+            if (spColor === "" || spType === "" || spSender === "" || spContent === "") {
+                alert("모든 항목을 작성해주세요.");
+                return false; // 제출 막기
+            }
+        }
 
-                    var img = $(this);
 
-                    // 이미지가 이미 선택되어 있는 경우
-                    if (selectedSpTypeImg !== null) {
-                        // 선택된 이미지의 src 값을 원래 값으로 변경
-                        selectedSpTypeImg.attr("src", originalSpTypeSrc);
-                    }
+        // 이미지 클릭 시 value값 넘기는 스크립트
+        $(document).ready(function() {
 
-                    // 선택된 이미지 정보 업데이트
-                    selectedSpTypeImg = img;
-                    originalSpTypeSrc = img.attr("src");
+            var selectedSpTypeImg = null; // 선택된 송편 타입 이미지를 저장하는 변수
+            var originalSpTypeSrc = null; // 선택된 송편 타입 이미지의 원래 src 값을 저장하는 변수
 
-                    // 이미지 클릭 시 새로운 이미지로 변경
-                    var newSrc = "/img/select_daltokki.png";
-                    img.attr("src", newSrc);
+            $(".sp_type_img").click(function() {
+                event.preventDefault(); // 이미지 클릭 시 submit되는 오류 해결
 
-                    // 변경되는 이미지 크기 고정
-                    img.css("width", "120px");
+                var img = $(this);
 
-                    // spType 값 업데이트
-                    var type = img.attr("value");
-                    $("#spType").val(type);
+                // 이미지가 이미 선택되어 있는 경우
+                if (selectedSpTypeImg !== null) {
+                    // 선택된 이미지의 src 값을 원래 값으로 변경
+                    selectedSpTypeImg.attr("src", originalSpTypeSrc);
+                }
 
-                });
+                // 선택된 이미지 정보 업데이트
+                selectedSpTypeImg = img;
+                originalSpTypeSrc = img.attr("src");
 
-                var selectedSpColorImg = null; // 선택된 송편 색 이미지를 저장하는 변수
-                var originalSpColorSrc = null; // 선택된 송편 색 이미지의 원래 src 값을 저장하는 변수
+                // 이미지 클릭 시 새로운 이미지로 변경
+                var newSrc = "/img/select_daltokki.png";
+                img.attr("src", newSrc);
 
-                  $(".sp_color_img").click(function() {
-                    event.preventDefault(); // 이미지 클릭 시 submit되는 오류 해결
+                // 변경되는 이미지 크기 고정
+                img.css("width", "120px");
 
-                    var img = $(this);
+                // spType 값 업데이트
+                var type = img.attr("value");
+                $("#spType").val(type);
 
-                    // 이미지가 이미 선택되어 있는 경우
-                    if (selectedSpColorImg !== null) {
-                        // 선택된 이미지의 src 값을 원래 값으로 변경
-                        selectedSpColorImg.attr("src", originalSpColorSrc);
-                    }
-
-                    // 선택된 이미지 정보 업데이트
-                    selectedSpColorImg = img;
-                    originalSpColorSrc = img.attr("src");
-
-                    // 이미지 클릭 시 새로운 이미지로 변경
-                    var newSrc = "/img/select_daltokki.png";
-                    img.attr("src", newSrc);
-
-                    // 변경되는 이미지 크기 고정
-                    img.css("width", "120px");
-                    img.css("height", "90px");
-
-                    // spColor 값 업데이트
-                    var color = $(this).attr("value");
-                    $("#spColor").val(color);
-                });
             });
+
+            var selectedSpColorImg = null; // 선택된 송편 색 이미지를 저장하는 변수
+            var originalSpColorSrc = null; // 선택된 송편 색 이미지의 원래 src 값을 저장하는 변수
+
+              $(".sp_color_img").click(function() {
+                event.preventDefault(); // 이미지 클릭 시 submit되는 오류 해결
+
+                var img = $(this);
+
+                // 이미지가 이미 선택되어 있는 경우
+                if (selectedSpColorImg !== null) {
+                    // 선택된 이미지의 src 값을 원래 값으로 변경
+                    selectedSpColorImg.attr("src", originalSpColorSrc);
+                }
+
+                // 선택된 이미지 정보 업데이트
+                selectedSpColorImg = img;
+                originalSpColorSrc = img.attr("src");
+
+                // 이미지 클릭 시 새로운 이미지로 변경
+                var newSrc = "/img/select_daltokki.png";
+                img.attr("src", newSrc);
+
+                // 변경되는 이미지 크기 고정
+                img.css("width", "120px");
+                img.css("height", "90px");
+
+                // spColor 값 업데이트
+                var color = $(this).attr("value");
+                $("#spColor").val(color);
+            });
+
+        });
+
+
         </script>
 </body>
 </html>

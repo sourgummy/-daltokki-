@@ -52,11 +52,16 @@
         var goToWriteSpButton = document.getElementById("goToWriteSpButton");
         var hiddenIdInput = document.getElementById("hiddenIdInput");
 
-        goToWriteSpButton.addEventListener("click", function() {
-            var id = hiddenIdInput.value;
-            var url = 'writeSp?id=' + encodeURIComponent(id);
-            location.href = url;
-        });
+        // 버튼이 존재하는 경우에만 이벤트 리스너 등록하도록 수정(08/23)
+        if (goToWriteSpButton) {
+
+            goToWriteSpButton.addEventListener("click", function() {
+                var id = hiddenIdInput.value;
+                var url = 'writeSp?id=' + encodeURIComponent(id);
+                location.href = url;
+            });
+
+        }
     });
     // ----------------------miju(08/18 추가)-------------------------------
 </script>
