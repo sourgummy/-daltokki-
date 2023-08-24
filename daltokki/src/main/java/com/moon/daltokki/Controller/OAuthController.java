@@ -49,6 +49,7 @@ public class OAuthController {
     return "accessToken: " + accessTokenResponse.getBody();
     }
 
+  // ----------------- 지은 0822 -------------------
     @Autowired
     private OAuthService oAuthService;
 
@@ -63,13 +64,6 @@ public class OAuthController {
 
       String mainUrl = "/main?id=" + GoogleLoginId;
       return "redirect:" + mainUrl;
-//      return "main";
-    }
-
-    // 이동 테스트
-    @GetMapping("oauth/redirect")
-    public String test() {
-      return "main";
     }
 
   // ----------------- 지은 0822 -------------------
