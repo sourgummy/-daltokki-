@@ -71,10 +71,12 @@ public class OAuthService {
             user.setLoginType("G"); // 구글 가입 유형 "G"
             System.out.println(user);
             userRepository.save(user);
+            log.info("[OAuthService][GoogleSocialLogin] userInfo : {}", user);
         }
-//        else {
-//            // 로그인 처리는 좀 더 생각해보자ㅇ..
-//        }
+        else { // 이미 가입된 상태면
+            // 로그인 처리는 좀 더 생각해보자ㅇ..
+            user = userRepository.findByEmail(email);
+        }
         return user;
     }
 

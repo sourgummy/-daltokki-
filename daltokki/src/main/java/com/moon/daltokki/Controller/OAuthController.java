@@ -57,7 +57,7 @@ public class OAuthController {
     public String googleLogin(@RequestParam String code, @PathVariable String registrationId) {
       log.info("[OAuthController][googleLogin] code : {}", code);
       UserModel user = oAuthService.GoogleSocialLogin(code, registrationId);
-      log.info("[OAuthController][googleLogin] user : {}", user);
+      log.info("[OAuthController][googleLogin] user : {}", user); // 이거 왜 두번째부터 null로 넘어오냐
       String GoogleLoginId = user.getUsername();
       log.info("[OAuthController][googleLogin] GoogleLoginId : {}", GoogleLoginId);
 
