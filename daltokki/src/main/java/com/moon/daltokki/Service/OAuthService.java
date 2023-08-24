@@ -59,6 +59,7 @@ public class OAuthService {
             String rabbit = rabbit_array[0];
             String[] emailSplit = email.split("@");
             String email2 = emailSplit[0];
+
 //            String[] email2 = email.split("@");
 
             log.info("[Service][GoogleSocialLogin] email2 : {}", email2);
