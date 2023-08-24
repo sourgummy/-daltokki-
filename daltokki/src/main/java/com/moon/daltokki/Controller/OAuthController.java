@@ -53,14 +53,16 @@ public class OAuthController {
     private OAuthService oAuthService;
 
     @GetMapping("/login/oauth2/code/{registrationId}")
-    // 여기서 code가 안넘어와서 오류나는데 이건 제ㅏ가 발급하는게 아니에요 선생님ㅜㅜ.. api 일안하냐..
+    // 여기서 code가 안넘어오는데 이러지마세요 선생님ㅜㅜ.. api 일안하냐..
     public String googleLogin(@RequestParam String code, @PathVariable String registrationId) {
-      UserModel user = oAuthService.GoogleSocialLogin(code, registrationId); // 여기서 저장한거아냐?
+      log.info("[OAuthController][googleLogin] code : {}", code);
+      UserModel user = oAuthService.GoogleSocialLogin(code, registrationId);
       log.info("[OAuthController][googleLogin] user : {}", user);
       String GoogleLoginId = user.getUsername();
       log.info("[OAuthController][googleLogin] GoogleLoginId : {}", GoogleLoginId);
 
-      return "main?id=" + GoogleLoginId;
+      String mainUrl = "/main?id=" + GoogleLoginId;
+      return "redirect:" + mainUrl;
 //      return "main";
     }
 
