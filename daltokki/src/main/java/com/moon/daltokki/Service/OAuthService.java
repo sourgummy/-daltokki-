@@ -59,6 +59,7 @@ public class OAuthService {
             String rabbit = rabbit_array[0];
             String[] emailSplit = email.split("@");
             String email2 = emailSplit[0];
+
 //            String[] email2 = email.split("@");
 
             log.info("[Service][GoogleSocialLogin] email2 : {}", email2);
@@ -98,7 +99,6 @@ public class OAuthService {
 
         HttpEntity entity = new HttpEntity(params, headers);
 
-        // tokenUri가 null로 넘어오니까 URI is not absolute -> 65번 줄에서 걸리는거
         // application-oauth.properties 요소 수정 => env.getProperty()로 가져올때 이름과 동일해야함
         ResponseEntity<JsonNode> responseNode = restTemplate.exchange(tokenUri, HttpMethod.POST, entity, JsonNode.class);
         JsonNode accessTokenNode = responseNode.getBody();

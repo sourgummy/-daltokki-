@@ -59,6 +59,8 @@ dependencies {
 
 	// oauth 라이브러리
 	implementation 'com.github.scribejava:scribejava-core:3.3.0'
+	// oauth2-client 라이브러리
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	// 유틸 라이브러리
 	implementation 'commons-lang:commons-lang:2.3'
 	// json 라이브러리
