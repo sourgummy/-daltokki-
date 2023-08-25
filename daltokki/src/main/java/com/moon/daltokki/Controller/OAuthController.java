@@ -1,10 +1,16 @@
 package com.moon.daltokki.Controller;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.moon.daltokki.Service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.moon.daltokki.Model.UserModel;
+import com.moon.daltokki.Service.OAuthService;
+import com.moon.daltokki.Service.UserService;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -63,7 +69,7 @@ import java.util.Map;
 //    }
 //}
 
-
+@Slf4j
 @Controller
 public class OAuthController {
     private final Logger log = LoggerFactory.getLogger(OAuthController.class);
@@ -86,6 +92,33 @@ public class OAuthController {
         model.addAttribute("responseBody", responseBody);
         return "user/NCallback";
     }
+
+    @Autowired
+    private OAuthService oAuthService;
+
+    @GetMapping("/login/oauth2/code/{registrationId}")
+    // 여기서 code가 안넘어오는데 이러지마세요 선생님ㅜㅜ.. api 일안하냐..
+    public String googleLogin(@RequestParam String code, @PathVariable String registrationId) {
+      log.info("[OAuthController][googleLogin] code : {}", code);
+      UserModel user = oAuthService.GoogleSocialLogin(code, registrationId);
+      log.info("[OAuthController][googleLogin] user : {}", user); // 이거 왜 두번째부터 null로 넘어오냐
+      String GoogleLoginId = user.getUsername();
+      log.info("[OAuthController][googleLogin] GoogleLoginId : {}", GoogleLoginId);
+
+      String mainUrl = "/main?id=" + GoogleLoginId;
+      return "redirect:" + mainUrl;
+//      return "main";
+    }
+
+    // 이동 테스트
+    @GetMapping("oauth/redirect")
+    public String test() {
+      return "main";
+    }
+
+  // ----------------- 지은 0822 -------------------
+}
+
 
     private String callNaverAPI(String apiUrl) {
         try {

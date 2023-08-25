@@ -54,14 +54,14 @@ body.modal-open {
     border: 5px solid blue;
 }
 
-input{
-    color: #212539;
-}
-
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+input {
+    color: #212539;
 }
 
 /* 버튼 */
