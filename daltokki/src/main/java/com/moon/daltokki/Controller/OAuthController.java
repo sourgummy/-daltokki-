@@ -111,8 +111,6 @@ public class OAuthController {
     }
 
   // ----------------- 지은 0822 -------------------
-}
-
 
     private String callNaverAPI(String apiUrl) {
         try {
