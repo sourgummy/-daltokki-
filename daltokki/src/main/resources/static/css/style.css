@@ -15,7 +15,7 @@
 }
 
 body {
-    margin: 0; /* 필수 */
+    margin: 50px; /* 필수 */
     padding: 0;
     display: flex; /* 모달을 화면 가운데 배치 */
     flex-direction: column; /* 가로축 영향 -> align-items */
@@ -41,6 +41,7 @@ body.modal-open {
     flex-direction: column; /* 가로축 영향 -> align-items */
     align-items: center;
     background-color: #212539;
+    border-radius: 20px;
 }
 
 /* 중앙에 위치한 박스의 스타일 설정 */
@@ -51,6 +52,12 @@ body.modal-open {
     /* padding: 20px; */
     background-color: #212539;
     border: 5px solid blue;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 input {
@@ -65,9 +72,9 @@ input {
 }
 
 .btn-hover {
-    width: 200px;
-    font-size: 17px;
-    font-weight: 200;
+    width: 250px;
+    font-size: 20px;
+    font-weight: 100;
     font-family: 'NeoDunggeunmoPro-Regular';
     color: #fff;
     cursor: pointer;
