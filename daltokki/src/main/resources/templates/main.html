@@ -21,10 +21,10 @@
         <button sec:authorize="isAnonymous()" onclick="location.href='join'" class="btn-hover color-3">회원가입</button>
         <!-- 네이버아이디로로그인 버튼 노출 영역 -->
         <div id="naver_id_login"></div>
-        <button sec:authorize="isAnonymous()" onclick="location.href='/oauth2/authorization/kakao'" class="btn-hover color-3">카카오 로그인</button>
         <button sec:authorize="isAnonymous()" onclick="location.href='/oauth2/authorization/google'" class="btn-hover color-3">Google (Oauth2)</button>
         <button sec:authorize="isAnonymous()" onclick="location.href='https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&access_type=offline&include_granted_scopes=true&response_type=code&state=state_parameter_passthrough_value&redirect_uri=http://localhost:8080/login/oauth2/code/google&client_id=915921592597-00dhkg1tfbu2imhqst4mpolrj3tjer8h.apps.googleusercontent.com'" class="btn-hover color-3">
             Google (Oauth2)</button>
+        <button sec:authorize="isAnonymous()" onclick="location.href='http://localhost:8080/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/redirect'" class="btn-hover color-3">카카오 로그인</button>
 <!--        code 파라미터 X-->
         <button sec:authorize="isAnonymous()" onclick="location.href='/login/oauth2/code/google'" class="btn-hover color-3">Google (loginform)</button>
         <!-- 로그인 및 회원가입 끝 -->
