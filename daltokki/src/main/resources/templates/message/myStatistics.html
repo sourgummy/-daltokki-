@@ -10,103 +10,20 @@
   <meta charset="UTF-8">
   <title>myStatistics</title>
   <style>
-    #noti_btn{
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      background-color: #ffffff;
-      border: none;
-    }
 
-    #modal{
-      position: absolute;
-      left: auto;
-      top: 100px;
-      width: 500px;
-      height: 250px;
-    }
-
-    #modal_body{
-      height: 150px;
-    }
-
-    #close_btn, #refresh_btn {
-      background-color: #ffffff;
-      border: none;
-    }
   </style>
 </head>
 <script>
-$(function(){
-// 모달 오픈
-  $(document).on('click', '#noti_btn', function(e){
-    console.log("click modal");
-    console.log($("#spId").text());
 
-     $('#modal').modal('show');
-   });
-  // 모달 닫기
-  $(document).on('click', '#close_btn', function(e){
-      console.log("close modal");
-      $('#modal').modal('hide');
-      });
-});
-
-function modalOpen(){
-  console.log($("#spId").text());
-  $.ajax({
-    type: "get",
-    url: "/ajaxAlarm",
-    data: { spId: $('#spId').text() },
-  })
-  .done(function(response){
-    const jsonArray = JSON.parse(response);
-    $("#modal_table").empty();
-
-    for(let i=0; i<jsonArray.length; i++){
-      console.log(jsonArray[i]);
-      let result = "<tr>"
-                  + "<td>" + jsonArray[i].spSender + "으로부터 송편이 도착했습니다."
-                  + "</td>";
-      $("#modal_table").append(result);
-    }
-  })
-  .fail(function(){
-    $("#modal_body").html("에러났대요~~~");
-  });
-}
-
-function refreshModal(){
-  console.log($("#spId").text());
-  $.ajax({
-    type: "get",
-    url: "/ajaxAlarm",
-    data: { spId: $('#spId').text() },
-  })
-  .done(function(response){
-    const jsonArray = JSON.parse(response);
-    $("#modal_table").empty();
-
-    for(let i=0; i<jsonArray.length; i++){
-      console.log(jsonArray[i]);
-      let result = "<tr>"
-                  + "<td>" + jsonArray[i].spSender + "으로부터 송편이 도착했습니다."
-                  + "</td>";
-      $("#modal_table").append(result);
-    }
-  })
-  .fail(function(){
-    $("#modal_body").html("에러났대요~~~");
-  });
-}
 </script>
 <body>
-<!--  알림 : 나한테 쌓인 송편 몇개인지
-통계 : 어떤앙꼬가 몇개 어떤색송편이 몇개-->
-  <!--알림모달버튼-->
-<button type="button" class="btn btn-primary" id="noti_btn" data-bs-toggle="modal" onclick="modalOpen()">
-  <img th:src="@{'/img/icon/bar.png'}" width="50px" height="50px">
-</button>
+<div th:replace="fragments/common :: header">
+  <!-- header 삽입 -->
+</div>
+<div th:replace="fragments/common :: menu">
+<!-- menu 삽입 -->
+</div>
+
 <div>
   <h1 th:text="${sp.spRecipient}" id="spId"></h1>
   <hr>
@@ -152,24 +69,6 @@ function refreshModal(){
     </table>
 </div>
 
-<!-- 알림 모달 -->
-<div class="modal" id="modal">
-  <div class="modal-content" id="modal_body">
-    <h3>따끈따끈한 송편</h3>
-    <button type="button" id="refresh_btn" class="btn" onclick="refreshModal()">
-      <img th:src="@{'/img/icon/refreshIcon.png'}" width="15px" height="15px">
-    </button>
-    <table id="modal_table">
-      <tbody>
-      <!-- ajax -->
-      </tbody>
-    </table>
-    <div class="modal-footer">
-      <button type="button" id="close_btn" class="btn btn-default" data-dismiss="modal">
-        <img th:src="@{'/img/icon/xIcon.png'}" width="15px" height="15px">
-      </button>
-    </div>
-  </div>
-</div>
+
 </body>
 </html>
