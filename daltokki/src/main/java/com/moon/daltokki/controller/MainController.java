@@ -57,6 +57,7 @@ public class MainController {
             Optional<UserModel> userInfo = userService.selectUserInfo(id);
             List<SpModel> spList = mainService.selectSpList(id);
 
+            // 송편 갯수에 따라 토끼 이미지 갱신
             int spRecord = userInfo.get().getSpRecord();
             // 임시 테스트로 1/3/5개로 설정
             log.info("[MainController][main] record : {}", spRecord);
@@ -74,6 +75,15 @@ public class MainController {
             model.addAttribute("spList", spList);
             log.info("[MainController][main] userInfo : {}", userInfo);
             log.info("[MainController][main] spList : {}", spList);
+
+            // 이메일로 조회해서 토큰코드가 존재하면 토큰코드를 main으로 넘겨줌
+            String tokenCode = userService.selectToken(userInfo.get().getEmail());
+            log.info("[MainController][main] tokenCode : {}", tokenCode);
+
+            if(tokenCode != null) {
+                model.addAttribute("tokenCode", tokenCode);
+            }
+
             return "Home";
         }
     }

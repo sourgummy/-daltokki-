@@ -29,12 +29,48 @@ public class OAuthService {
     public OAuthService(Environment env) {
         this.env = env;
     }
-    
-    // 테스트용 -> 잘넘어옴
-//    public void GoogleSocialLogin(String code, String registrationId) {
-//        System.out.println("code = " + code);
-//        System.out.println("registrationId = " + registrationId);
-//    }
+
+    public UserModel GoogleSocialLogin(OAuth2AuthenticationToken oauth2Authentication) {
+        System.out.println("GoogleSocialLogin");
+
+        String tokenCode = oauth2Authentication.getName();
+        String name = (String)oauth2Authentication.getPrincipal().getAttribute("name");
+        String email = oauth2Authentication.getPrincipal().getAttribute("email");
+        String id = email.split("@")[0];
+        log.info("[OAuthService][googleLoginSuccess] tokenCode : {}", tokenCode);
+        log.info("[OAuthService][googleLoginSuccess] name : {}", name);
+        log.info("[OAuthService][googleLoginSuccess] email : {}", email);
+        log.info("[OAuthService][googleLoginSuccess] id : {}", id);
+
+        UserModel user = new UserModel();
+
+        if(!userRepository.existsByEmail(email)) { // 동일한 이메일이 없으면 DB에 신규 등록
+            // username, password, nickname, sp_record, login_type, rabbit_type
+            String[] rabbit_array = {"hj1", "je1", "jk1", "mj1", "yr1"};
+            List<String> rabbit_list = Arrays.asList(rabbit_array);
+            Collections.shuffle(rabbit_list);
+            rabbit_list.toArray(rabbit_array);
+            String rabbit = rabbit_array[0];
+
+            user.setUsername(id); // 회원 아이디 
+            user.setToken(tokenCode); // 토큰
+            user.setNickname(name); // 닉네임
+            user.setRabbitType(rabbit); // 토끼 유형 세팅
+            user.setEmail(email); // 구글 로그인 이메일
+            user.setSpRecord(0); // 송편 개수 0
+            user.setLoginType("G"); // 구글 가입 유형 "G"
+            System.out.println(user);
+            userRepository.save(user);
+            log.info("[OAuthService][GoogleSocialLogin] userInfo : {}", user);
+        }
+        else { // 이미 가입된 상태면
+            // 로그인 처리는 시큐리티가 자동으로 해주는걸
+            user = userRepository.findByEmail(email);
+        }
+        return user;
+    }
+
+    // ------------------------ 위가 새로 짠 코드 --------------------
 
     public UserModel GoogleSocialLogin2(String code, String registrationId) {
         System.out.println("GoogleSocialLogin2");
@@ -76,56 +112,8 @@ public class OAuthService {
             log.info("[OAuthService][GoogleSocialLogin] userInfo : {}", user);
         }
         else { // 이미 가입된 상태면
-            System.out.println("어디서 오류3?");
-            // 로그인 처리는 좀 더 생각해보자ㅇ..
+            // 로그인 처리는 좀 더 생각해보자ㅇ.
             user = userRepository.findByEmail(email); // 아 여기서 걸린다
-            System.out.println("어디서 오류4?");
-        }
-        return user;
-    }
-
-    public UserModel GoogleSocialLogin(OAuth2AuthenticationToken oauth2Authentication) {
-        System.out.println("GoogleSocialLogin");
-
-//        String tokenCode = oauth2Authentication.getName();
-        String name = (String)oauth2Authentication.getPrincipal().getAttribute("name");
-        String email = oauth2Authentication.getPrincipal().getAttribute("email");
-        String id = email.split("@")[0];
-        System.out.println("id = " + id);
-        System.out.println("email = " + email);
-        System.out.println("nickname = " + name);
-
-        UserModel user = new UserModel();
-
-        if(!userRepository.existsByEmail(email)) { // 동일한 이메일이 없으면 DB에 신규 등록
-            // username, password, nickname, sp_record, login_type, rabbit_type
-            String[] rabbit_array = {"hj1", "je1", "jk1", "mj1", "yr1"};
-            List<String> rabbit_list = Arrays.asList(rabbit_array);
-            Collections.shuffle(rabbit_list);
-            rabbit_list.toArray(rabbit_array);
-            String rabbit = rabbit_array[0];
-            String[] emailSplit = email.split("@");
-            String email2 = emailSplit[0];
-
-//            String[] email2 = email.split("@");
-
-            log.info("[Service][GoogleSocialLogin] email2 : {}", email2);
-            user.setUsername(id); // 회원 아이디 (여기에 이메일을 저장해야하나..?)
-//            user.setUsername(id);
-            user.setNickname(name); // 닉네임
-            user.setRabbitType(rabbit); // 토끼 유형 세팅
-            user.setEmail(email); // 구글 로그인 이메일
-            user.setSpRecord(0); // 송편 개수 0
-            user.setLoginType("G"); // 구글 가입 유형 "G"
-            System.out.println(user);
-            userRepository.save(user);
-            log.info("[OAuthService][GoogleSocialLogin] userInfo : {}", user);
-        }
-        else { // 이미 가입된 상태면
-            System.out.println("어디서 오류3?");
-            // 로그인 처리는 좀 더 생각해보자ㅇ..
-            user = userRepository.findByEmail(email); // 아 여기서 걸린다
-            System.out.println("어디서 오류4?");
         }
         return user;
     }

@@ -46,14 +46,11 @@ public class SecurityConfig {
                 .loginPage("/login")
                 .defaultSuccessUrl("/loginSuccess")
         )
-        .oauth2Login(oauth2Login ->
+        .oauth2Login(oauth2Login -> // 구글 로그인
             oauth2Login
                 .loginPage("/oauth2/authorization/google")
-//                .defaultSuccessUrl("/login/oauth2/code/google") // login?error로 매핑됨
                 .defaultSuccessUrl("/googleLogin") // login?error로 매핑됨
-                .failureUrl("/loginForm")		// 로그인 실패 시 /loginForm으로 이동
-//                .userInfoEndpoint()			// 로그인 성공 후 사용자정보를 가져온다
-//                .userService(principalOauth2UserService)	//사용자정보를 처리할 때 사용한다
+                .failureUrl("/loginForm") // 로그인 실패 시 /loginForm으로 이동
         )
         .logout(logout ->
             logout

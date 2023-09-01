@@ -87,47 +87,27 @@ public class OAuthController {
     @Autowired
     private OAuthService oAuthService;
 
-    @GetMapping("/login/oauth2/code/{registrationId}")
-    // 여기서 code가 안넘어오는데 이러지마세요 선생님ㅜㅜ.. api 일안하냐..
-    public String googleLogin(@RequestParam String code, @PathVariable String registrationId) {
-        System.out.println("어디서 오류5?");
-        log.info("[OAuthController][googleLogin] code : {}", code);
-        UserModel user = oAuthService.GoogleSocialLogin2(code, registrationId);
-        log.info("[OAuthController][googleLogin] user : {}", user); // 이거 왜 두번째부터 null로 넘어오냐
-        String GoogleLoginId = user.getUsername();
-        log.info("[OAuthController][googleLogin] GoogleLoginId : {}", GoogleLoginId);
-
-        String mainUrl = "/main?id=" + GoogleLoginId;
-        System.out.println("어디서 오류6?");
-        return "redirect:" + mainUrl;
-    }
-
-    // 아니 로그인은 되는데 시큐리티에 세션 저장이 안됨.. 하..
+    // 아니 로그인은 되는데 시큐리티에 세션이 안넘어감.. 하..
+    // -> 시큐리티에는 토큰이 저장되는데 id랑 비교를 하고 있었으니까 ^ㅅ^.. 히밣.. 디버깅 열심히 해요..
     @GetMapping("/googleLogin")
     public String googleLoginSuccess(Authentication authentication, Model model) {
         if (authentication instanceof OAuth2AuthenticationToken) {
             OAuth2AuthenticationToken oauth2Authentication = (OAuth2AuthenticationToken) authentication;
 
-            // 사용자 정보 추출
-            String tokenCode = oauth2Authentication.getName();
-            String name = (String)oauth2Authentication.getPrincipal().getAttribute("name");
-            String email = oauth2Authentication.getPrincipal().getAttribute("email");
-            String pictureUrl = oauth2Authentication.getPrincipal().getAttribute("picture");
-
-            log.info("[OAuthController][googleLoginSuccess] oauth2Authentication : {}", oauth2Authentication);
-            log.info("[OAuthController][googleLoginSuccess] tokenCode : {}", tokenCode);
-            log.info("[OAuthController][googleLoginSuccess] name : {}", name);
-            log.info("[OAuthController][googleLoginSuccess] email : {}", email);
-
             UserModel user = oAuthService.GoogleSocialLogin(oauth2Authentication);
-            log.info("[OAuthController][googleLogin] user : {}", user); // 이거 왜 두번째부터 null로 넘어오냐
+            log.info("[OAuthController][googleLogin] user : {}", user);
 
             String GoogleLoginId = user.getUsername();
             log.info("[OAuthController][googleLogin] GoogleLoginId : {}", GoogleLoginId);
 
-            String mainUrl = "/main?id=" + GoogleLoginId;
+//            String tokenCode = user.getToken();
+//            log.info("[OAuthController][googleLogin] tokenCode : {}", tokenCode);
+//
+//            model.addAttribute("tokenCode", tokenCode);
+//            log.info("[OAuthController][googleLogin] model_tokenCode : {}", model.getAttribute("tokenCode")); // null
 
-            return "redirect:" + mainUrl;
+            // model이 안넘어가는건가..?
+            return "redirect:/main?id=" + GoogleLoginId;
         }
         // 로그인 실패 시 로그인 폼 페이지로 이동
         return "redirect:/loginForm";
