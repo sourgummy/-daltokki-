@@ -1,4 +1,4 @@
-package com.moon.daltokki.Repository;
+package com.moon.daltokki.repository;
 
 import com.moon.daltokki.Model.StatisticsModel;
 import org.springframework.data.mongodb.repository.MongoRepository;

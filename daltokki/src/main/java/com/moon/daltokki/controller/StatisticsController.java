@@ -1,7 +1,7 @@
-package com.moon.daltokki.Controller;
+package com.moon.daltokki.controller;
 
 import com.moon.daltokki.Model.StatisticsModel;
-import com.moon.daltokki.Service.StatisticsService;
+import com.moon.daltokki.service.StatisticsService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -77,12 +77,12 @@ public class StatisticsController {
 
   @ResponseBody
   @GetMapping(value = "/ajaxAlarm")
-  public void alarm(Model model, HttpServletResponse response, @RequestParam String spId){
+  public void alarm(Model model, HttpServletResponse response, @RequestParam String spId) {
     List<StatisticsModel> newList = statisticsService.selectStatistics(spId);
 
     JSONArray jsonArray = new JSONArray();
 
-    for(StatisticsModel sModel : newList){
+    for (StatisticsModel sModel : newList) {
       System.out.println(sModel);
       JSONObject jsonObject = new JSONObject();
 
@@ -98,9 +98,6 @@ public class StatisticsController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-
-
-
-
   }
 }
+
