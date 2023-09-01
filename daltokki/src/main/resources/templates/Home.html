@@ -161,16 +161,18 @@
         /*<![CDATA[*/
         const currentUserId = /*[[${#authentication.name}]]*/ ''; // 현재 사용자의 아이디
         const paramId = /*[[${param.id}]]*/ ''; // param.id 값
+        const tokenCode = /*[[${tokenCode}]]*/ ''; // 토큰코드
         /*]]>*/
-
-        console.log(currentUserId);
-        console.log(paramId);
 
         $(document).ready(function() {
             // 송편 내용 조회 모달
             $('#ContentModal').on('show.bs.modal', function(event) {
-                // 로그인 아이디(currentUserId)와 paramId를 비교해 일치하는 유저만 송편을 조회할 수 있게 제어
-                if (currentUserId != paramId) {
+                console.log("currentUserId : " + currentUserId);
+                console.log("paramId : " + paramId);
+                console.log("tokenCode : " + tokenCode);
+
+                // 시큐리티 세션(currentUserId)과 paramId 또는 토큰을 비교해 일치하는 유저만 송편을 조회할 수 있게 제어
+                if (currentUserId != paramId && currentUserId != tokenCode) {
                     alert(paramId + " 토끼만 읽을 수 있어요!🐰");
                     return false;
                 }
