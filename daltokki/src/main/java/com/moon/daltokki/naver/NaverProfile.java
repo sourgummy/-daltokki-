@@ -1,4 +1,4 @@
-package com.moon.daltokki.Naver;
+package com.moon.daltokki.naver;
 
 import java.io.BufferedReader;
 import java.io.IOException;

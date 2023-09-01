@@ -1,7 +1,7 @@
-package com.moon.daltokki.Service;
+package com.moon.daltokki.service;
 
 import com.moon.daltokki.Model.UserModel;
-import com.moon.daltokki.Repository.UserRepository;
+import com.moon.daltokki.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;

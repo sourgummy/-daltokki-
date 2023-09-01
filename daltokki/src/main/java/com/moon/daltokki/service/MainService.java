@@ -1,9 +1,9 @@
-package com.moon.daltokki.Service;
+package com.moon.daltokki.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.moon.daltokki.Model.SpModel;
-import com.moon.daltokki.Repository.SpRepository;
-import com.moon.daltokki.Repository.UserRepository;
+import com.moon.daltokki.repository.SpRepository;
+import com.moon.daltokki.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,9 +1,8 @@
-package com.moon.daltokki.Service;
+package com.moon.daltokki.service;
 
 import com.moon.daltokki.Model.UserModel;
-import com.moon.daltokki.Model.UserRole;
-import com.moon.daltokki.Repository.UserRepository;
-import com.moon.daltokki.Sequrity.PrincipalDetails;
+import com.moon.daltokki.repository.UserRepository;
+import com.moon.daltokki.sequrity.PrincipalDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
