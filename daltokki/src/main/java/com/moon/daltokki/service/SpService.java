@@ -1,14 +1,10 @@
-package com.moon.daltokki.Service;
+package com.moon.daltokki.service;
 
 import com.moon.daltokki.Model.SpModel;
-import com.moon.daltokki.Model.UserModel;
-import com.moon.daltokki.Repository.SpRepository;
+import com.moon.daltokki.repository.SpRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Slf4j
 @Service

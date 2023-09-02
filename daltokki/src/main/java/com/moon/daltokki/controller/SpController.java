@@ -1,9 +1,8 @@
-package com.moon.daltokki.Controller;
+package com.moon.daltokki.controller;
 
 import com.moon.daltokki.Model.SpModel;
-import com.moon.daltokki.Repository.UserRepository;
-import com.moon.daltokki.Service.SpService;
-import com.moon.daltokki.Service.UserService;
+import com.moon.daltokki.service.SpService;
+import com.moon.daltokki.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

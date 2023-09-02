@@ -1,7 +1,7 @@
-package com.moon.daltokki.Controller;
+package com.moon.daltokki.controller;
 
 import com.moon.daltokki.Model.UserModel;
-import com.moon.daltokki.Service.UserService;
+import com.moon.daltokki.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -9,13 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -90,6 +87,7 @@ public class UserController {
     // 로그인시 사용자 식별 정보가 포함된 url 생성 - 지은
     @GetMapping("/loginSuccess")
     public String loginSuccessRedirect() {
+        System.out.println("여기로 오나?");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = auth.getName();
 

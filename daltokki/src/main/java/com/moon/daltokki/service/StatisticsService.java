@@ -1,7 +1,7 @@
-package com.moon.daltokki.Service;
+package com.moon.daltokki.service;
 
 import com.moon.daltokki.Model.StatisticsModel;
-import com.moon.daltokki.Repository.StatisticsRepository;
+import com.moon.daltokki.repository.StatisticsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

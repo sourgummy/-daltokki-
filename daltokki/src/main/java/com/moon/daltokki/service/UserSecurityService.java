@@ -1,8 +1,8 @@
-package com.moon.daltokki.Service;
+package com.moon.daltokki.service;
 
 import com.moon.daltokki.Model.UserModel;
 import com.moon.daltokki.Model.UserRole;
-import com.moon.daltokki.Repository.UserRepository;
+import com.moon.daltokki.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

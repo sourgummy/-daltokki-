@@ -1,4 +1,4 @@
-package com.moon.daltokki.Sequrity;
+package com.moon.daltokki.sequrity;
 
 import com.moon.daltokki.Model.UserModel;
 import lombok.Getter;

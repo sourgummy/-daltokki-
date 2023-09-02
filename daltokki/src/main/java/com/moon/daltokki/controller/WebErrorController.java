@@ -1,4 +1,4 @@
-package com.moon.daltokki.Controller;
+package com.moon.daltokki.controller;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;

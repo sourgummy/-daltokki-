@@ -1,7 +1,7 @@
-package com.moon.daltokki.Service;
+package com.moon.daltokki.service;
 
 import com.moon.daltokki.Model.UserModel;
-import com.moon.daltokki.Repository.UserRepository;
+import com.moon.daltokki.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -47,7 +47,7 @@ public class UserService {
     userRepository.save(user);
   }
 
-  // ----------------- 지은 -------------------
+  // ----------------- 지은 0901 갱신 -------------------
   // id 존재 여부 확인
   public boolean checkIdExists(String id) {
     log.info("[Service][checkIdExists] Checking if ID exists: {}", id);
@@ -61,8 +61,20 @@ public class UserService {
 
     return userRepository.findByusername(id);
   }
+  
+  // 사용자의 토큰 조회
+  public String selectToken(String email) {
+    log.info("[Service][selectToken] selected tokencode : {}", email);
 
-  // ----------------- 지은 -------------------
+    UserModel user = userRepository.findByEmail(email);
+
+    if (user.getToken() != null) {
+      return user.getToken();
+    }
+
+    return null; // 해당 이메일에 해당하는 유저가 없는 경우
+  }
+  // ----------------- 지은 0901 갱신 -------------------
 
   // ----미주 다녀감(08/23)-------------------------------------
 

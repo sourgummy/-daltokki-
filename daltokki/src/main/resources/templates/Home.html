@@ -72,9 +72,9 @@
         <div class="box">
             <div class="row">
                 <div th:each="sp : ${spList}" class="col-md-4" style="text-align:center">
-                    <a href="#" data-toggle="modal" data-target="#ContentModal" th:data-spId="${sp.spId}">
-                        <!-- DB에 저장된 spColor에 맞는 이미지 표시 -->
-                        <img th:src="@{'/img/SP_' + ${sp.spColor} + '.png'}" width="100px" height="100px">
+                        <a href="#" data-toggle="modal" data-target="#ContentModal" th:data-spId="${sp.spId}">
+                            <!-- DB에 저장된 spColor에 맞는 이미지 표시 -->
+                            <img th:src="@{'/img/SP_' + ${sp.spColor} + '.png'}" width="100px" height="100px">
                         <br> <!-- 이미지와 텍스트를 구분 위해 줄 바꿈 : 다른 방법이 있나..? -->
                         <span th:text="${sp.spSender}"></span>
                     </a>
@@ -83,11 +83,11 @@
         </div>
 
         <div class="btn">
-            <!-- 본인의 송편 페이지면 링크 버튼 출력-->
-            <button th:if="${#strings.equals(#authentication.name, param.id)}" id="shareKakao" onClick="sendLinkDefault()" class="btn-hover color-3">카카오 공유</button>
-            <button th:if="${#strings.equals(#authentication.name, param.id)}" id="shareLink" onclick="openCopyModal()" class="btn-hover color-3">링크 공유</button>
+<!--             본인의 송편 페이지면 링크 버튼 출력-->
+            <button th:if="${#strings.equals(#authentication.name, param.id) or #strings.equals(#authentication.name, tokenCode)}" id="shareKakao" onClick="sendLinkDefault()" class="btn-hover color-3">카카오 공유</button>
+            <button th:if="${#strings.equals(#authentication.name, param.id) or #strings.equals(#authentication.name, tokenCode)}" id="shareLink" onclick="openCopyModal()" class="btn-hover color-3">링크 공유</button>
             <!-- 본인의 송편 페이지가 아니면 송편 작성 버튼 출력-->
-            <button th:if="${!#strings.equals(#authentication.name, param.id)}" id="goToWriteSpButton" class="btn-hover color-3">메시지 작성</button>
+            <button th:if="${!#strings.equals(#authentication.name, param.id) and !#strings.equals(#authentication.name, tokenCode)}" id="goToWriteSpButton" class="btn-hover color-3">메시지 작성</button>
             <input type="hidden" id="hiddenIdInput" name="id" th:value="${param.id}">
         </div>
     </div>
@@ -161,16 +161,18 @@
         /*<![CDATA[*/
         const currentUserId = /*[[${#authentication.name}]]*/ ''; // 현재 사용자의 아이디
         const paramId = /*[[${param.id}]]*/ ''; // param.id 값
+        const tokenCode = /*[[${tokenCode}]]*/ ''; // 토큰코드
         /*]]>*/
-
-        console.log(currentUserId);
-        console.log(paramId);
 
         $(document).ready(function() {
             // 송편 내용 조회 모달
             $('#ContentModal').on('show.bs.modal', function(event) {
-                // 로그인 아이디(currentUserId)와 paramId를 비교해 일치하는 유저만 송편을 조회할 수 있게 제어
-                if (currentUserId != paramId) {
+                console.log("currentUserId : " + currentUserId);
+                console.log("paramId : " + paramId);
+                console.log("tokenCode : " + tokenCode);
+
+                // 시큐리티 세션(currentUserId)과 paramId 또는 토큰을 비교해 일치하는 유저만 송편을 조회할 수 있게 제어
+                if (currentUserId != paramId && currentUserId != tokenCode) {
                     alert(paramId + " 토끼만 읽을 수 있어요!🐰");
                     return false;
                 }

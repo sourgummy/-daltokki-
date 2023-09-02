@@ -1,4 +1,4 @@
-package com.moon.daltokki.Sequrity;
+package com.moon.daltokki.sequrity;
 
 public class NaverOauthParams {
     private String access_token;
