@@ -1,0 +1,42 @@
+<!-- yeram -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="headerFragment">
+
+  <div>
+    <img th:src="@{'/img/daltokki2.png'}" id="mainImg">
+  </div>
+  <!--  알림 : 나한테 쌓인 송편 몇개인지
+  통계 : 어떤앙꼬가 몇개 어떤색송편이 몇개-->
+  <!--알림모달버튼-->
+  <div>
+    <button type="button" class="btn btn-primary" id="noti_btn" data-bs-toggle="modal" onclick="modalOpen()">
+      <img th:src="@{'/img/icon/bar.png'}" width="50px" height="50px">
+    </button>
+
+
+    <!-- 알림 모달 -->
+    <div class="modal" id="headerModal">
+      <div class="modal-content" id="headerModalBody">
+        <h3>따끈따끈한 송편</h3>
+        <button type="button" id="refresh_btn" class="btn" onclick="refreshModal()">
+          <img th:src="@{'/img/icon/refreshIcon.png'}" width="15px" height="15px">
+        </button>
+        <table id="headerModalTable">
+          <tbody>
+          <!-- ajax -->
+          </tbody>
+        </table>
+        <div class="headerModalFooter">
+          <button type="button" id="close_btn" class="btn btn-default" data-dismiss="modal">
+            <img th:src="@{'/img/icon/xIcon.png'}" width="15px" height="15px">
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</html>

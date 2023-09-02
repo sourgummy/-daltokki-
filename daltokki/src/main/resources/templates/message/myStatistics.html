@@ -1,73 +1,73 @@
 <!-- yeram -->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
 <head>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/modalStyle.css">
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-  <meta charset="UTF-8">
   <title>myStatistics</title>
   <style>
-
+    th img {
+      width : 150px;
+      height : 150px;
+    }
+    #bodySection {
+      background-color : #212539;
+    }
+    th {
+      line-height : 0;
+    }
+    table {
+      margin : auto;
+    }
   </style>
 </head>
-<script>
+<!-- Content -->
+<body layout:fragment="content">
 
-</script>
-<body>
-<div th:replace="fragments/common :: header">
-  <!-- header 삽입 -->
-</div>
-<div th:replace="fragments/common :: menu">
-<!-- menu 삽입 -->
-</div>
 
-<div>
+<div id="bodySection">
   <h1 th:text="${sp.spRecipient}" id="spId"></h1>
   <hr>
   <h3>송편</h3>
     <table>
       <tr>
-        <th>종류</th>
-        <th>갯수</th>
+        <th>
+          <img th:src="@{'/img/SP_TYPE_BEAN.png'}" >
+        </th>        <th>
+          <img th:src="@{'/img/SP_TYPE_REDBEAN.png'}" >
+        </th>        <th>
+          <img th:src="@{'/img/SP_TYPE_HONEY.png'}" >
+        </th>
       </tr>
       <tr>
-        <td>콩</td>
         <td th:text="${sp.spTypeCount1}"></td>
-      </tr>
-      <tr>
-        <td>팥</td>
         <td th:text="${sp.spTypeCount2}"></td>
-      </tr>
-      <tr>
-        <td>꿀</td>
         <td th:text="${sp.spTypeCount3}"></td>
       </tr>
     </table>
-  <hr>
+
   <h3>앙꼬</h3>
     <table>
       <tr>
-        <th>종류</th>
-        <th>갯수</th>
+        <th>
+          <img th:src="@{'/img/SP_WHITE.png'}" >
+        </th>        <th>
+        <img th:src="@{'/img/SP_PINK.png'}" >
+      </th>        <th>
+        <img th:src="@{'/img/SP_GREEN.png'}" >
+      </th>        <th>
+        <img th:src="@{'/img/SP_WHITE.png'}" >
+      </th>
       </tr>
       <tr>
-        <td>흰</td>
         <td th:text="${sp.spColorCount1}"></td>
-      </tr>      <tr>
-        <td>핑</td>
         <td th:text="${sp.spColorCount2}"></td>
-      </tr>      <tr>
-        <td>쑥</td>
         <td th:text="${sp.spColorCount3}"></td>
-      </tr>      <tr>
-        <td>무지개</td>
         <td th:text="${sp.spColorCount4}"></td>
       </tr>
     </table>
 </div>
+
 
 
 </body>
