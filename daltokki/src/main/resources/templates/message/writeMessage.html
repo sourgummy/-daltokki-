@@ -13,29 +13,23 @@
     <style>
         body {
             text-align: center;
-            margin: 0;
-            padding: 0;
-            background-color: #200589;
+           /* margin: 0;
+            padding: 0; */
+            background-color: #212539; /* 배경색 main과 동일하게 수정 */
+
         }
 
         #messageForm {
             background-color: #fff;
-            border-radius: 10px;
-            /* padding: 20px; */
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-            width: 50%;
-            margin: 50px auto;
-        }
-
-        h1 {
-            color: #fff;
+            width: 45%;
+            margin: auto; /* 비율 수정 */
         }
 
         input[type="text"],
         textarea {
             width: 90%;
             padding: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
@@ -56,7 +50,7 @@
         /* 새로 추가된 스타일 */
         table {
             width: 60%;
-            margin: 50px auto;
+            margin: auto; /* 화면비율 이상한 오류 수정 */
             border-collapse: collapse;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
@@ -79,11 +73,13 @@
 
         h1 {
             padding : 20px;
+            color: #fff;
         }
     </style>
 
     <h1 th:inline="text"><span th:text="${param.id}"></span>님에게 작성하는 메시지</h1>
-    <hr>
+    <!-- <hr>주석처리 -->
+    <!-- <hr> -->
 
 </head>
 <body>
@@ -123,19 +119,28 @@
 
     // 메시지에 금지어 작성 시 해당 금지어 삭제하는 함수
     $(document).ready(function() {
-      $('#spContent_byteLimit').keyup(function() {
+
+      var isAlertShown = false;
+
+      $('#spContent_byteLimit').on('blur',function() {
         var textBoxValue = $(this).val();
         console.log(textBoxValue);
 
+        // 금지어 작성
         var forbidden = [
           '젠장', '즐 ' , '빠큐' , '뻐큐' , '씨발', '새끼', '개새끼', '엿먹어', '엿', 'ㅗ', '제길',
           '씨이', '씨ㅂ','씨ㅍ','씹','앂','쌰ㅂ','씨플','씳알','씻','쓰불','쓰발','쓰볼','쓰봘',
-          '쒸이빨','쓰벵','쓰벙','씌빵','씌뱅','씌붕','쓰뻥','씨뱅아'
+          '쒸이빨','쓰벵','쓰벙','씌빵','씌뱅','씌붕','쓰뻥','씨뱅아','지랄','지ㄹ','염병','ㅆㅂ',
+          '병신','ㅄ','ㅂㅅ','ㅅㅂ','제엔장','제기랄','제길','도랏나', '시발', '썅', '씨앙', '즐'
         ];
 
+        // blur 이벤트로 변경 + alert는 1회만 발생하도록 변경
         for(var i = 0; i < forbidden.length; i++) {
-          if(textBoxValue.search(forbidden[i]) > -1) {
-            alert('고운말을 사용하지 않는다면\n메시지가 지워지는 마법 뾰로롱~!');
+          if (textBoxValue.includes(forbidden[i])) {
+            if (!isAlertShown) {
+                alert('고운말을 사용하지 않는다면\n메시지가 지워지는 마법 뾰로롱~!');
+                isAlertShown = true;
+            }
             textBoxValue = textBoxValue.replace(forbidden[i], '');
           }
         }
@@ -156,15 +161,6 @@
             success: function(response) {
                 if (response) {
                     $("#senderStatus").text("이미 사용 중인 닉네임입니다.");
-                    $("#submitButton").prop("disabled", true); // 폼 제출 막기
-
-                    // #submitButton의 클릭 이벤트 핸들러 등록
-                     $("#submitButton").on("click", function(event) {
-                        event.preventDefault(); // 폼 제출 막기
-                        alert("닉네임을 수정하세요!");
-                        $("#sender").focus();
-                    });
-
                 } else {
                     $("#senderStatus").text(""); // 중복되지 않은 경우 메시지 초기화
                     $("#submitButton").prop("disabled", false); // 폼 제출 가능
@@ -182,12 +178,8 @@
 
     // 08/20 추가 -------------------글자 수 체크 x -> 바이트 수 체크 o
     </script>
-
-    </div>
-    <hr>
-
     <!-- 메시지 작성 폼 -->
-    <div id="messageForm">
+    <div id="messageForm" class="pixel-corners">
         <form id="composeForm" action="/saveSp" method="post" onsubmit="return validateForm();">
 
             <input type="hidden" id="spColor" name="spColor">
@@ -199,7 +191,7 @@
             <table style="width:100%">
                 <tr>
                     <td style="text-align: center; vertical-align: middle;">
-                        송편의 색 선택하기
+                        송편 색 선택하기
                     </td>
                     <td>
                         <input type="image" src="/img/SP_GREEN.png" alt="GREEN" value="GREEN" class="sp_color_img">
@@ -213,26 +205,26 @@
                 </tr>
                 <tr>
                     <td style="text-align: center; vertical-align: middle;">
-                        송편의 속 선택하기
+                        송편 속 선택하기
                     </td>
                     <td>
                         <input type="image" src="/img/SP_TYPE_HONEY.png" style="width:120px; height:96px;" alt="꿀(재물운)" value="HONEY" class="sp_type_img">
                     </td>
                     <td>
-                        <input type="image" src="/img/SP_TYPE_BEAN.png" style="width:120px; height:96px;" alt="콩(성공운)" VALUE="BEAN" class="sp_type_img">
+                        <input type="image" src="/img/SP_TYPE_BEAN.png" style="width:120px; height:96px;" alt="콩(성공운)" value="BEAN" class="sp_type_img">
                     </td>
                     <td>
-                        <input type="image" src="/img/SP_TYPE_REDBEAN.png" style="width:120px; height:96px;" alt="팥(행운)" VALUE="REDBEAN" class="sp_type_img">
+                        <input type="image" src="/img/SP_TYPE_REDBEAN.png" style="width:120px; height:96px;" alt="팥(행운)" value="REDBEAN" class="sp_type_img">
                     </td>
                 </tr>
                 <tr>
                     <!-- 메세지 발신자(닉네임만 적용) -->
                     <td style="text-align: center; vertical-align: middle;">
-                        보내는 사람(닉네임)
+                        보내는 사람
                     </td>
                     <td colspan="3">
-                        <input type="text" id="sender" name="spSender">
-                        <span id="senderStatus" style="color: red;"></span>
+                        <input type="text" id="sender" name="spSender"><br>
+                        <span id="senderStatus" style="color: red; font-size: 12px;"></span>
                     </td>
 
                 </tr>
@@ -241,17 +233,18 @@
                         메시지 입력하기
                     </td>
                     <td colspan="3">
-                        <textarea name="spContent" rows="8"
+                        <textarea name="spContent" rows="5"
                                   class="form-control"
                                   id="spContent_byteLimit"
                                   onkeyup="fn_checkByte(this)"
-                                  placeholder="즐거운 추석 연휴^^!"></textarea>
+                                  placeholder="즐거운 추석 연휴*゜    (\ (\
+                               c(⌒(_*´ㅅ`)_"></textarea>
                         <sup>(<span id="nowByte">0</span>/100bytes)</sup>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="5">
-                        <button type="submit" id="submitButton">메시지 보내기</button>
+                        <button type="submit" id="submitButton" class="pixel-button">메시지 보내기</button>
                     </td>
                 </tr>
             </table>
@@ -269,7 +262,22 @@
             if (spColor === "" || spType === "" || spSender === "" || spContent === "") {
                 alert("모든 항목을 작성해주세요.");
                 return false; // 제출 막기
+            } else if ($("#senderStatus").text() === "이미 사용 중인 닉네임입니다.") {
+                alert("닉네임을 변경해주세요");
+                $("#sender").focus();
+                return false; // 제출 막기
+            } else {
+                if(spType === "HONEY") {
+                    alert("메시지에 재물운을 담아 전송했습니다!");
+                } else if(spType === "BEAN") {
+                    alert("메시지에 성공운을 담아 전송했습니다!");
+                } else if(spType === "REDBEAN") {
+                    alert("메시지에 행운을 담아 전송했습니다!");
+                }
             }
+
+            return true; // 유효한 경우 폼 제출 허용
+
         }
 
 
