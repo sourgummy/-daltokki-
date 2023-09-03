@@ -77,10 +77,6 @@
         }
     </style>
 
-    <h1 th:inline="text"><span th:text="${param.id}"></span>님에게 작성하는 메시지</h1>
-    <!-- <hr>주석처리 -->
-    <!-- <hr> -->
-
 </head>
 <body>
 <script>
@@ -178,6 +174,7 @@
 
     // 08/20 추가 -------------------글자 수 체크 x -> 바이트 수 체크 o
     </script>
+    <h1><span th:text="${param.id}"></span>님에게 작성하는 메시지</h1>
     <!-- 메시지 작성 폼 -->
     <div id="messageForm" class="pixel-corners">
         <form id="composeForm" action="/saveSp" method="post" onsubmit="return validateForm();">
