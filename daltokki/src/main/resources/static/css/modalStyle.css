@@ -1,35 +1,39 @@
-.modal fade {
-    border: 3px solid red;
-}
-
-.modal-dialog {
-    border: 3px solid red;
-}
-
 .modal-content {
     background-color: #abb1cf;
-    border: 5px solid blue;
 }
 
-.modal-header {
-    border: 3px solid red;
+.selectmodal-content {
+    background-image: url('/img/modal.jpg');
+    background-size: cover;
 }
-
-.modal-body {
-    border: 3px solid red;
-}
-
-.modal-footer {
-    border: 3px solid red;
-}
-
-/* 하단에 뜨는건 맞는데
-1. 하단에 모달이 별개로 위치가 고정되면서 스크롤이 생김 -> 굳이 하단에 둬야할까
-2. 모달도 반응형으로 해야함 -> 애초에 반응형이 필요한..가? CSS는 모바일 화면을 기준으로?
-3. 배경이나 테마같은건 애초에 이미지 파일로 까는게 맞을듯
-4. 도대체 모달 크기 조정 어떻게함 부트스트랩 css 오버라이딩 해야하나 */
 
 /* 스크롤 방지 스타일 */
 body.modal-open {
     overflow: hidden;
 }
+
+.message-header {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.message-title {
+    font-size: 24px;
+    margin: 0;
+}
+
+.message-sender, .message-date {
+    font-size: 16px;
+    color: #eeeeee;
+    margin: 0;
+    height: 30px;
+}
+
+.message-content {
+    font-size: 20px;
+    line-height: 1.5;
+    color: #555;
+    height: 200px;
+}
+

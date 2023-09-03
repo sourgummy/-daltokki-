@@ -45,6 +45,8 @@ body.modal-open {
     justify-content: center;
     flex-direction: column; /* 가로축 영향 -> align-items */
     align-items: center;
+    /* background-image: url('/img/mainback2.jpg'); */
+    /* background-size: cover; */
     background-color: #212539;
     border-radius: 20px;
 }
@@ -52,11 +54,22 @@ body.modal-open {
 /* 중앙에 위치한 박스의 스타일 설정 */
 .box {
     width: 100%;
-    /* height: 100%; */
-    height: 350px;
+    height: 450px;
     /* padding: 20px; */
-    background-color: #212539;
-    border: 5px solid blue;
+    background-image: url('/img/mainback.jpg');
+    background-size: cover;
+    border-radius: 8px;
+}
+
+/* Flexbox 레이아웃 설정 */
+.box .row {
+    display: flex;
+    flex-wrap: wrap;
+    height: 350px;
+}
+
+.box .col-md-4 {
+    width: calc(33.33% - 10px); /* 각 요소의 너비를 33.33%로 설정 (10px 간격 고려) */
 }
 
 * {
@@ -68,11 +81,6 @@ body.modal-open {
 input {
     color: #212539;
 }
-
-/* img {
-  max-width: 100%;
-  height: auto !important;
-} */
 
 /* 버튼 */
 
@@ -134,5 +142,12 @@ input {
     /* display: block; */
     /* 블록 레벨 요소로 변경 */
 }
+
+.btn-hover.color-3paging {
+     background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
+     box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+     width: 80px;
+     height: 50px;
+ }
 
 /* 버튼 끝 */
