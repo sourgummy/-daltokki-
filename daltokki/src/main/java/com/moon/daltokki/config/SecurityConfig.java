@@ -49,6 +49,15 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/googleLogin") // login?error로 매핑됨
                 .failureUrl("/loginForm") // 로그인 실패 시 /loginForm으로 이동
         )
+        .oauth2Login(oauth2Login -> // 네이버 로그인
+            oauth2Login
+                .loginPage("/oauth2/authorization/naver") // 네이버 로그인 URL
+                .defaultSuccessUrl("/login/oauth2/code/naver") // 로그인 성공 시 리다이렉트될 URL
+                .failureUrl("/loginForm") // 로그인 실패 시 리다이렉트될 URL
+//                .userInfoEndpoint() // 사용자 정보 가져오기 설정
+//                .userService(new NaverOAuth2UserService()) // 사용자 정보를 가져오는 서비스
+        )
+
         .logout(logout ->
             logout
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
