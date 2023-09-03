@@ -42,6 +42,7 @@ public class MainService {
 
     // 송편 삭제
     public void removeSp(String spId) {
+        log.info("[Service][removeSp] spId : {}", spId);
         spRepository.deleteBySpId(spId);
         log.info("[Service][removeSp] sp delete success!!");
     }

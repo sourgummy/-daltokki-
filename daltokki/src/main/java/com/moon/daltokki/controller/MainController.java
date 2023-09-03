@@ -102,7 +102,8 @@ public class MainController {
     // 송편 지우기
     @ResponseBody
     @PostMapping(value = "/deleteSp")
-    public void deleteSp(@RequestParam String spId) throws JsonProcessingException {
+    public void deleteSp(@RequestParam String spId) {
+        log.info("[MainController][removeSp] spId : {}", spId);
         mainService.removeSp(spId);
     }
     
