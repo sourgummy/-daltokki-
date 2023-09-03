@@ -23,9 +23,6 @@ public class SecurityConfig {
   @Autowired
   OAuthService oAuthService;
 
-//  @Autowired
-//  PrincipalOauth2UserService principalOauth2UserService;
-
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http

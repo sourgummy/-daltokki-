@@ -46,6 +46,7 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5' // Spring Security
 //	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE' // Spring Security
 //	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:2.6.2' // sns 로그인
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // sns 로그인
 	implementation 'org.springframework.boot:spring-boot-starter-validation' // 유효성 검사
 
 	//qrcode module dependencies 추가
@@ -73,9 +74,12 @@ dependencies {
 
 	//소셜로그인 등 클라이언트에서 필요한 의존성
 	// jpa
-	 implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    }
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+	// thymeleaf layout
+	// https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect
+	implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.5.3'
+}
 
 tasks.named('test') {
 	useJUnitPlatform()

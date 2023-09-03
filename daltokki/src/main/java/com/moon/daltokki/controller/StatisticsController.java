@@ -25,7 +25,7 @@ public class StatisticsController {
   StatisticsService statisticsService;
 
   @GetMapping (value = "/myStatistics")
-  public String myStatistics(Model model, @RequestParam String name)
+  public String myStatistics(Model model, @RequestParam String id)
   {
     // httpsession으로 id 받아와서 db 조회해서 뿌리기!!!! => 지금안됨
     // , @SessionAttribute String userId
@@ -33,7 +33,8 @@ public class StatisticsController {
     // 아이디,송편,앙꼬 보내기~
 
 //    model.addAttribute(userId, "userId");
-    List<StatisticsModel> spList = statisticsService.selectStatistics(name);
+    List<StatisticsModel> spList = statisticsService.selectStatistics(id);
+
     int spTypeCount1 = 0;
     int spTypeCount2 = 0;
     int spTypeCount3 = 0;
@@ -42,26 +43,27 @@ public class StatisticsController {
     int spColorCount3 = 0;
     int spColorCount4 = 0;
     for(StatisticsModel sp : spList){
-      if(sp.getSpType() == 1){
+
+      if(sp.getSpType().equals("BEAN")){
         spTypeCount1++;
-      } else if(sp.getSpType() == 2){
+      } else if(sp.getSpType().equals("REDBEAN")){
         spTypeCount2++;
-      } else if(sp.getSpType() == 3){
+      } else if(sp.getSpType().equals("HONEY")){
         spTypeCount3++;
       }
-      if(sp.getSpColor() == 1){
+      if(sp.getSpColor().equals("WHITE")){
         spColorCount1++;
-      } else if(sp.getSpColor() == 2){
+      } else if(sp.getSpColor().equals("PINK")){
         spColorCount2++;
-      } else if(sp.getSpColor() == 3){
+      } else if(sp.getSpColor().equals("GREEN")){
         spColorCount3++;
-      } else if(sp.getSpColor() == 4){
+      } else if(sp.getSpColor().equals("RAINBOW")){
         spColorCount4++;
       }
     }
 
     StatisticsModel sp = new StatisticsModel();
-    sp.setSpToName(name);
+    sp.setSpRecipient(id);
     sp.setSpTypeCount1(spTypeCount1);
     sp.setSpTypeCount2(spTypeCount2);
     sp.setSpTypeCount3(spTypeCount3);
@@ -86,7 +88,7 @@ public class StatisticsController {
       System.out.println(sModel);
       JSONObject jsonObject = new JSONObject();
 
-      jsonObject.put("spFromName", sModel.getSpFromName());
+      jsonObject.put("spSender", sModel.getSpSender());
 
       jsonArray.add(jsonObject);
     }

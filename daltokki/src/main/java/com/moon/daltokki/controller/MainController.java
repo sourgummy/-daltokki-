@@ -76,12 +76,14 @@ public class MainController {
             log.info("[MainController][main] userInfo : {}", userInfo);
             log.info("[MainController][main] spList : {}", spList);
 
-            // 이메일로 조회해서 토큰코드가 존재하면 토큰코드를 main으로 넘겨줌
-            String tokenCode = userService.selectToken(userInfo.get().getEmail());
-            log.info("[MainController][main] tokenCode : {}", tokenCode);
+            if(userInfo.get().getEmail() != null) { // 이메일로 가입한 sns 가입 유저일때만
+                // 이메일로 조회해서 토큰코드가 존재하면 토큰코드를 main으로 넘겨줌
+                String tokenCode = userService.selectToken(userInfo.get().getEmail());
+                log.info("[MainController][main] tokenCode : {}", tokenCode);
 
-            if(tokenCode != null) {
-                model.addAttribute("tokenCode", tokenCode);
+                if (tokenCode != null) {
+                    model.addAttribute("tokenCode", tokenCode);
+                }
             }
 
             return "Home";

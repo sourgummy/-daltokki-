@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html lagn="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>layout</title>
+
+  <!-- config fragment 사용 -->
+  <th:block th:replace="fragments/config :: configFragment" ></th:block>
+</head>
+
+<!-- header.html-->
+<header th:replace="fragments/header :: headerFragment"></header>
+
+<body layout:fragment="content"></body>
+
+<!-- footer 원한다면 여기 넣기 -->
+<footer th:replace="fragments/footer :: footerFragment"></footer>
+</html>
