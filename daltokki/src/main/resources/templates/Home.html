@@ -71,23 +71,25 @@
         <img th:src="@{'/img/' + ${userInfo.get().rabbitType} + '.png'}" width="100px" height="100px">
         <div class="box">
             <div class="row">
-                <div th:each="sp : ${spList}" class="col-md-4" style="text-align:center">
+                <div th:each="sp : ${spList}" class="col-md-4" style="text-align: center;">
+                    <div style="width: 100%; hight: 100%; max-width: 100px; max-hight: 100px; margin: 0 auto;">
                         <a href="#" data-toggle="modal" data-target="#ContentModal" th:data-spId="${sp.spId}">
                             <!-- DB에 저장된 spColor에 맞는 이미지 표시 -->
-                            <img th:src="@{'/img/SP_' + ${sp.spColor} + '.png'}" width="100px" height="100px">
-                        <br> <!-- 이미지와 텍스트를 구분 위해 줄 바꿈 : 다른 방법이 있나..? -->
-                        <span th:text="${sp.spSender}"></span>
-                    </a>
+                            <img th:src="@{'/img/SP_' + ${sp.spColor} + '.png'}">
+                            <br> <!-- 이미지와 텍스트를 구분 위해 줄 바꿈 : 다른 방법이 있나..? -->
+                            <span th:text="${sp.spSender}" style="font-size: 12px;"></span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="btn">
 <!--             본인의 송편 페이지면 링크 버튼 출력-->
-            <button th:if="${#strings.equals(#authentication.name, param.id) or #strings.equals(#authentication.name, tokenCode)}" id="shareKakao" onClick="sendLinkDefault()" class="btn-hover color-3">카카오 공유</button>
-            <button th:if="${#strings.equals(#authentication.name, param.id) or #strings.equals(#authentication.name, tokenCode)}" id="shareLink" onclick="openCopyModal()" class="btn-hover color-3">링크 공유</button>
+            <button th:if="${#strings.equals(#authentication.name, param.id) or #strings.equals(#authentication.name, tokenCode)}" id="shareKakao" onClick="sendLinkDefault()" class="btn-hover color-3mini">카카오 공유</button>
+            <button th:if="${#strings.equals(#authentication.name, param.id) or #strings.equals(#authentication.name, tokenCode)}" id="shareLink" onclick="openCopyModal()" class="btn-hover color-3mini">링크 공유</button>
             <!-- 본인의 송편 페이지가 아니면 송편 작성 버튼 출력-->
-            <button th:if="${!#strings.equals(#authentication.name, param.id) and !#strings.equals(#authentication.name, tokenCode)}" id="goToWriteSpButton" class="btn-hover color-3">메시지 작성</button>
+            <button th:if="${!#strings.equals(#authentication.name, param.id) and !#strings.equals(#authentication.name, tokenCode)}" id="goToWriteSpButton" class="btn-hover color-3mini">메시지 작성</button>
             <input type="hidden" id="hiddenIdInput" name="id" th:value="${param.id}">
         </div>
     </div>
