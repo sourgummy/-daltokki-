@@ -3,14 +3,17 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.springframework.org/security/tags">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+     >
 <link rel="stylesheet" href="css/style.css">
 <head>
   <meta charset="UTF-8">
   <title>daltokki_join</title>
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
-<body>
-  <h1>달토끼 가입</h1>
+<body layout:fragment="content">
+  <div class="container">
+    <h1>달토끼 가입</h1>
   <form method="post" action="joinPro">
 <!--    <script id="entry-template" type="text/x-handlebars-template"></script>-->
     <table>
@@ -45,37 +48,36 @@
       </tr>
       <tr>
         <td colspan="2">
-          <button type="submit" class="btn-hover color-3">가입하기</button>
-          <button type="button" onclick="location.href='login'" class="btn-hover color-3">로그인</button>
+          <button type="submit" class="btn-hover color-3mini">가입하기</button>
+          <button type="button" onclick="location.href='login'" class="btn-hover color-3mini">로그인</button>
         </td>
       </tr>
     </table>
 
-    <button class="btn btn-primary bi bi-person"> 가입</button>
-    <a href="/" role="button" class="btn btn-info bi bi-arrow-return-left"> 목록</a>
   </form>
   </form>
     <style>
       *{
-        color: white;
-        font-size: 30px;
+        font-size: 20px;
         }
         h1{
-        font-size: 50px;
-        padding: 30px;
+        font-size: 40px;
+        padding: 25px;
         }
         td{
         padding: 7px;
         margin-right: 10px;
+        width: 300px;
         }
         th{
-        text-align: left;
-        padding: 20px;
+        padding : 5px;
+        width: 100px;
         }
         input {
-        width: 300px;
-        height: 50px;
-        }
+        width: 250px;
+        height: 40px;
+     }
     </style>
+  </div>
 </body>
 </html>
