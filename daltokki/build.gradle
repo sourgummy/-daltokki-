@@ -46,6 +46,7 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5' // Spring Security
 //	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE' // Spring Security
 //	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:2.6.2' // sns 로그인
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // sns 로그인
 	implementation 'org.springframework.boot:spring-boot-starter-validation' // 유효성 검사
 
 	//qrcode module dependencies 추가
@@ -59,6 +60,8 @@ dependencies {
 
 	// oauth 라이브러리
 	implementation 'com.github.scribejava:scribejava-core:3.3.0'
+	// oauth2-client 라이브러리
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	// 유틸 라이브러리
 	implementation 'commons-lang:commons-lang:2.3'
 	// json 라이브러리
@@ -66,10 +69,14 @@ dependencies {
 	// gson
 	implementation 'com.google.code.gson:gson:2.9.0'
 
+	//소셜로그인 등 클라이언트에서 필요한 의존성
+//	 implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	// jpa
+//	 implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
 	// thymeleaf layout
 	// https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect
 	implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.5.3'
-
 }
 
 
