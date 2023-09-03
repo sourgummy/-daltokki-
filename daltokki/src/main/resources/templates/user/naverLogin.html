@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>네이버로그인</title>
+</head>
+<body>
+  <!-- Thymeleaf 템플릿 엔진 문법 사용 -->
+    <a th:href="@{${apiURL}}"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
+
+    <!-- 자바 코드를 Thymeleaf에서 실행하는 예제 -->
+    <script th:inline="java">
+        String clientId = "vmZ60MBkDiJfUnPtrRxQ";
+        String redirectURI = java.net.URLEncoder.encode("http://localhost:8080/oauth/login", "UTF-8");
+        java.security.SecureRandom random = new java.security.SecureRandom();
+        String state = new java.math.BigInteger(130, random).toString();
+        String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+        apiURL += "&client_id=" + clientId;
+        apiURL += "&redirect_uri=" + redirectURI;
+        apiURL += "&state=" + state;
+        apiURL += "&code=" + code;
+        session.setAttribute("state", state);
+        session.setAttribute("code", code);
+
+        // apiURL 값을 Thymeleaf 컨텍스트에 설정
+        context.setVariable("apiURL", apiURL);
+    </script>
+
+</body>
+</html>

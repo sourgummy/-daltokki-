@@ -35,6 +35,7 @@ public class UserModel {
     private String rabbitType;
     //    private String social_login_id; // 사용자 id 는 username으로 통합
 
+    private String token;
     private UserRole userRole;
 
 
