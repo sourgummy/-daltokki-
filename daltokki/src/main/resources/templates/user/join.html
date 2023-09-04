@@ -3,6 +3,8 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.springframework.org/security/tags">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+     >
 <link rel="stylesheet" href="css/style.css">
 <head>
   <meta charset="UTF-8">
@@ -10,78 +12,82 @@
   <link rel="stylesheet" href="css/style.css">
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
-<body>
+<body layout:fragment="content">
   <div class="container">
     <h1>달토끼 가입</h1>
-    <form method="post" action="joinPro">
+  <form method="post" action="joinPro">
 <!--    <script id="entry-template" type="text/x-handlebars-template"></script>-->
-      <table>
-        <tr>
-          <th><label for="username">아이디</label></th>
-          <td><input type="text" name="username" id="username">
-            <div id="valid_username" th:text="${valid_username}" class="valid"></div>
-          </td>
-        </tr>
-  <!--      <tr>-->
-  <!--        <th><label th:for="username">아이디</label></th>-->
-  <!--        <td><input type="text" name="username" id="username" th:filed="*{username}"-->
-  <!--                    th:class="${#fields.hasErrors('username')}? 'form-control fieldError' : 'form-control'">-->
-  <!--          <span id="valid_username" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>-->
-  <!--        </td>-->
-  <!--      </tr>-->
-        <tr>
-          <th><label for="password">비밀번호</label></th>
-          <td><input type="password" name="password" id="password">
-            <div id="valid_password" th:text="${valid_password}" class="valid"></div>
-          </td>
-        </tr>
-        <tr>
-          <th><label for="password2">비밀번호 확인</label></th>
-          <td><input type="password" name="password2" id="password2" class="valid"></td>
-        </tr>
-        <tr>
-          <th><label for="nickname">닉네임</label></th>
-          <td><input type="text" name="nickname" id="nickname">
-            <div id="valid_nickname" th:text="${valid_nickname}" class="valid"></div>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <button type="submit" class="btn-hover color-3mini">가입하기</button>
-            <button type="button" onclick="location.href='login'" class="btn-hover color-3mini">로그인</button>
-          </td>
-        </tr>
-      </table>
+    <table>
+      <tr>
+        <th><label for="username">아이디</label></th>
+        <td><input type="text" name="username" id="username">
+          <span id="valid_username" th:text="${valid_username}"></span>
+        </td>
+      </tr>
+<!--      <tr>-->
+<!--        <th><label th:for="username">아이디</label></th>-->
+<!--        <td><input type="text" name="username" id="username" th:filed="*{username}"-->
+<!--                    th:class="${#fields.hasErrors('username')}? 'form-control fieldError' : 'form-control'">-->
+<!--          <span id="valid_username" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>-->
+<!--        </td>-->
+<!--      </tr>-->
+      <tr>
+        <th><label for="password">비밀번호</label></th>
+        <td><input type="password" name="password" id="password">
+          <span id="valid_password" th:text="${valid_password}"></span>
+        </td>
+      </tr>
+      <tr>
+        <th><label for="password2">비밀번호 확인</label></th>
+        <td><input type="password" name="password2" id="password2"></td>
+      </tr>
+      <tr>
+        <th><label for="nickname">닉네임</label></th>
+        <td><input type="text" name="nickname" id="nickname">
+          <span id="valid_nickname" th:text="${valid_nickname}"></span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button type="submit" class="btn-hover color-3mini">가입하기</button>
+          <button type="button" onclick="location.href='login'" class="btn-hover color-3mini">로그인</button>
+        </td>
+      </tr>
+    </table>
+  </form>
 
-      <button class="btn btn-primary bi bi-person" onclick="location.href='/'">목록</button>
-<!--      <a href="/" role="button" class="btn btn-info bi bi-arrow-return-left">뒤로가기</a>-->
-    </form>
-  </div>
     <style>
+      
       *{
-        color: white;
-        font-size: 30px;
+        font-size: 20px;
         }
+      
         h1{
-        font-size: 50px;
-        padding: 30px;
+        font-size: 40px;
+        padding: 25px;
         }
+      
         td{
         padding: 7px;
         margin-right: 10px;
-        }
-        th{
-        text-align: left;
-        padding: 20px;
-        }
-        input {
         width: 300px;
-        height: 50px;
         }
+      
+        th{
+        padding : 5px;
+        width: 100px;
+        }
+      
+        input {
+        width: 250px;
+        height: 40px;
+        }
+      
         .valid {
         font-size: 15px;
         color: red;
-        }
+
     </style>
+  </div>
 </body>
 </html>
