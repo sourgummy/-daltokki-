@@ -10,6 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 @Slf4j
 @Controller
 public class SpController {
@@ -32,6 +36,19 @@ public class SpController {
         5. 메시지 일부항목 미선택 및 미입력시 폼제출 불가 (완료)
         6. 메시지 작성 완료 시 이동하는 매핑주소 수정 (완료)
 
+        09/03 추가 항목
+        1. 전체적인 message form css 업데이트 (border & button & 비율 등)
+        2. 메시지 작성 시 금지어 체크 blur 이벤트로 변경 + 금지어 갯수와 상관없이 alert 는 한번 실행 + 한번에 모든 금지어 삭제처리
+        3. 중복닉네임 작성 후 submit 시 focus 처리 및 폼 제출 막기 (수정 완료)
+        4. submit 동작 시
+          (1). 모든 항목 작성 시 제출
+          (2). 중복 닉네임 사용 시 닉네임으로 focus (수정시에만 제출가능)
+        5. placeholder 메시지 수정
+        6. 메시지 작성(성공) 완료 시 송편 속 타입에 따라 alert();
+           ex) "메시지에 재물운을 담아 전송했습니다!"
+        7. 메시지 길이 제한 200byte로 샹향 + 초과 시 폼 작성 제한
+        8. 송편 제목/작성날짜 칼럼 추가
+
 */
     @Autowired
     private SpService spService;
@@ -47,10 +64,29 @@ public class SpController {
         return "message/writeMessage";
     }
 
-    // 08/23 업데이트
-    // db에 메시지 저장(spModel) + user테이블에 sp_record에 (+1)
+    /* 08/23 업데이트
+        db에 메시지 저장(spModel) + user테이블에 sp_record에 (+1)
+       09/03 업데이트
+        작성일자(한국시간대로 변경) 저장
+     */
+
     @PostMapping("/saveSp")
     public String saveSp(@ModelAttribute("sp") SpModel sp, Model model) {
+
+
+        // sp테이블에 작성일자 저장
+        // 1. 한국 시간대로 설정
+        TimeZone seoulTimeZone = TimeZone.getTimeZone("Asia/Seoul");
+        Date currentDate = new Date();
+
+        // 2. SimpleDateFormat을 사용하여 날짜를 문자열로 변환
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        sdf.setTimeZone(seoulTimeZone); // 한국 시간대로 설정
+
+        String spCreateDate = sdf.format(currentDate);
+
+        // 3. DB에 작성일자 저장
+        sp.setSpCreateDate(spCreateDate);
 
         // sp테이블에 메시지 저장하는 구문
         spService.saveSp(sp);

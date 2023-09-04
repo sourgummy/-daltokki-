@@ -5,6 +5,9 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
+
 @Getter
 @Setter
 @Document(collection = "sp")
@@ -19,4 +22,6 @@ public class SpModel {
     private String spType; // 송편 속
     private String spColor; // 송편 색
     private String spContent; // 메시지 내용
+    private String spTitle; // 메시지 제목
+    private String spCreateDate; // 송편 작성일
 }

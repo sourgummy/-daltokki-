@@ -84,7 +84,7 @@
 
     //textarea 바이트 수 체크하는 함수
     function fn_checkByte(obj){
-        const maxByte = 100; // 최대 100바이트 입력가능(50자)
+        const maxByte = 200; // 최대 200바이트 입력가능(100자)
         const text_val = obj.value; // 입력한 문자
         const text_len = text_val.length; // 입력한 문자수
 
@@ -103,7 +103,6 @@
         }
 
         if(totalByte>maxByte){
-            alert('최대 100Byte까지만 입력가능합니다.');
                 document.getElementById("nowByte").innerText = totalByte;
                 document.getElementById("nowByte").style.color = "red";
         }else{
@@ -156,7 +155,7 @@
             data: { spSender: spSenderValue }, // 데이터를 객체로 전달
             success: function(response) {
                 if (response) {
-                    $("#senderStatus").text("이미 사용 중인 닉네임입니다.");
+                    $("#senderStatus").text("이미 사용 중인 닉네임입니다");
                 } else {
                     $("#senderStatus").text(""); // 중복되지 않은 경우 메시지 초기화
                     $("#submitButton").prop("disabled", false); // 폼 제출 가능
@@ -183,7 +182,6 @@
             <input type="hidden" id="spType" name="spType">
             <!-- 메세지 수신자 : hidden 타입으로 넘기기 / 조회만 가능하도록 -->
             <input type="hidden" id="recipient" name="spRecipient" th:value="${param.id}">
-
 
             <table style="width:100%">
                 <tr>
@@ -215,6 +213,15 @@
                     </td>
                 </tr>
                 <tr>
+                    <td style="text-align: center; vertical-align: middle;">
+                        제목
+                    </td>
+                    <td colspan="3">
+                        <input type="text" name="spTitle">
+                    </td>
+
+                </tr>
+                <tr>
                     <!-- 메세지 발신자(닉네임만 적용) -->
                     <td style="text-align: center; vertical-align: middle;">
                         보내는 사람
@@ -236,7 +243,7 @@
                                   onkeyup="fn_checkByte(this)"
                                   placeholder="즐거운 추석 연휴*゜    (\ (\
                                c(⌒(_*´ㅅ`)_"></textarea>
-                        <sup>(<span id="nowByte">0</span>/100bytes)</sup>
+                        <sup>(<span id="nowByte">0</span>/200byte)</sup>
                     </td>
                 </tr>
                 <tr>
@@ -255,14 +262,20 @@
             var spType = $("#spType").val();
             var spSender = $("#sender").val();
             var spContent = $("#spContent_byteLimit").val();
+            var spContentByte = $("#spContent_byteLimit").val();
+            var spTitle = $("#spTitle").val();
 
-            if (spColor === "" || spType === "" || spSender === "" || spContent === "") {
-                alert("모든 항목을 작성해주세요.");
+            if (spColor === "" || spType === "" || spSender === "" || spContent === "" || spTitle === "") {
+                alert("모든 항목을 작성해 주세요");
                 return false; // 제출 막기
-            } else if ($("#senderStatus").text() === "이미 사용 중인 닉네임입니다.") {
-                alert("닉네임을 변경해주세요");
+            } else if ($("#senderStatus").text() === "이미 사용 중인 닉네임입니다") {
+                alert("닉네임을 변경해 주세요");
                 $("#sender").focus();
                 return false; // 제출 막기
+            } else if ($("#nowByte").css("color") === "rgb(255, 0, 0)") {
+                 alert("최대 200byte까지 입력 가능합니다");
+                $("#spContent_byteLimit").focus();
+                return false;
             } else {
                 if(spType === "HONEY") {
                     alert("메시지에 재물운을 담아 전송했습니다!");
