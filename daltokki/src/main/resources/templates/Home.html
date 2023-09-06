@@ -83,10 +83,29 @@
                 </div>
             </div>
             <div>
-            <button class="btn-hover color-3paging">◁</button>
-            <button class="btn-hover color-3paging">▶</button>
+                <button class="btn-hover color-3paging" th:if="${currentPage > 0}" th:onclick="'location.href=\'' + @{/main(id=${id}, page=${currentPage - 1})} + '\''">◁</button>
+                <button class="btn-hover color-3paging" th:if="${currentPage < totalPages - 1}" th:onclick="'location.href=\'' + @{/main(id=${id}, page=${currentPage + 1})} + '\''">▶</button>
+            </div>
             </div>
         </div>
+
+        <!-- 페이징 컨트롤 -->
+<!--        <div class="pagination">-->
+<!--            <ul>-->
+<!--                <li th:if="${currentPage > 0}">-->
+<!--                    <a th:href="@{/main?id=${id}&amp;page=0}">First</a>-->
+<!--                </li>-->
+<!--                <li th:if="${currentPage > 0}">-->
+<!--                    <a th:href="@{/main?id=${id}&amp;page=${currentPage - 1}}">Previous</a>-->
+<!--                </li>-->
+<!--                <li th:if="${currentPage < totalPages - 1}">-->
+<!--                    <a th:href="@{/main?id=${id}&amp;page=${currentPage + 1}}">Next</a>-->
+<!--                </li>-->
+<!--                <li th:if="${currentPage < totalPages - 1}">-->
+<!--                    <a th:href="@{/main?id=${id}&amp;page=${totalPages - 1}}">Last</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
 
         <div class="btn">
 <!--             본인의 송편 페이지면 링크 버튼 출력-->

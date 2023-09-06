@@ -62,10 +62,11 @@ body.modal-open {
 }
 
 /* Flexbox 레이아웃 설정 */
-/* 송편 지울 때 레이아웃 망가짐 */
+/* 문제! 요소 지울 때 레이아웃 망가짐 -> row가 줄어듬 */
 .box .row {
+    width: 100%; /* width 설정해서 해결 */
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* 3개(33.3%*3) 이상 넘어가면 줄바꿈 */
     height: 350px;
 }
 
