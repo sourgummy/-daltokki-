@@ -42,10 +42,11 @@ public class MainController {
 
     // 메인페이지 (사용자의 송편 목록 조회)
     @GetMapping(value = "/main")
-    public String main(Model model, @RequestParam(required = false) String id) {
+//    public String main(Model model, @RequestParam(required = false) String id) {
+    public String main(Model model, @RequestParam(required = false) String id, @RequestParam(defaultValue = "0") int page) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName(); // 사용자의 아이디
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String userId = authentication.getName(); // 사용자의 아이디
         log.info("[MainController][main] userId : {}", id);
 
         // DB에서 해당 url 아이디 존재 여부 확인
@@ -70,6 +71,38 @@ public class MainController {
                 log.info("[MainController][main] rabbitType : {}", rabbitType);
                 userInfo.get().setRabbitType(rabbitType);
             }
+
+            /* 페이징 */
+            int pageSize = 9; // 페이지당 송편 수
+            int totalSpCount = spList.size(); // 전체 송편 수
+            log.info("[MainController][main] totalSpCount : {}", totalSpCount);
+            int totalPages = (int) Math.ceil((double) totalSpCount / pageSize) + 1; // 전체 페이지 수
+            log.info("[MainController][main] totalPages : {}", totalPages);
+
+            // 페이지 번호가 유효한 범위에 있도록 제한
+            if (page < 0) {
+                page = 0;
+            } else if (page >= totalPages) {
+                page = totalPages - 1;
+            }
+
+            // 현재 페이지에 해당하는 송편 리스트 추출
+            int startIdx = page * pageSize; // -9가 찍히네
+            int endIdx = Math.min((startIdx + pageSize), totalSpCount);
+            log.info("[MainController][main] startIdx : {}", startIdx);
+            log.info("[MainController][main] endIdx : {}", endIdx);
+            // -- 여기 위에까지는 통과 --
+            List<SpModel> pagedSpList = spList.subList(startIdx, endIdx);
+            System.out.println("어디서 걸림8"); // 여기까지 넘어왔음
+
+            // 페이지 정보를 모델에 추가
+            model.addAttribute("pagedSpList", pagedSpList);
+            log.info("[MainController][main] pagedSpList : {}", pagedSpList);
+            model.addAttribute("currentPage", page);
+            log.info("[MainController][main] currentPage : {}", page);
+            model.addAttribute("totalPages", totalPages);
+            log.info("[MainController][main] totalPages : {}", totalPages);
+            /* 페이징 */
 
             model.addAttribute("userInfo", userInfo);
             model.addAttribute("spList", spList);
