@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.*;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Component;
@@ -22,7 +25,8 @@ import java.util.*;
 public class OAuthService {
     private final Environment env;
     private final RestTemplate restTemplate = new RestTemplate();
-
+    @Autowired
+    private MongoTemplate mongoTemplate;
     @Autowired
     private UserRepository userRepository;
 
@@ -43,29 +47,51 @@ public class OAuthService {
         log.info("[OAuthService][googleLoginSuccess] id : {}", id);
 
         UserModel user = new UserModel();
+        String loginType = "G"; // 여기서 registrationId로 (google/kakao/naver) 받아와야함
+        log.info("[OAuthService][GoogleSocialLogin] loginType : {}",loginType);
 
-        if(!userRepository.existsByEmail(email)) { // 동일한 이메일이 없으면 DB에 신규 등록
+        Criteria criteria = new Criteria();
+        criteria.andOperator(
+                Criteria.where("email").is(email),
+                Criteria.where("loginType").is(loginType)
+        );
+
+        Query query = new Query(criteria);
+        log.info("[OAuthService][GoogleSocialLogin] query : {}", query);
+
+        List<UserModel> resultList = mongoTemplate.find(query, UserModel.class);
+        boolean result = !resultList.isEmpty();
+        log.info("[OAuthService][GoogleSocialLogin] result : {}", result);
+
+        if(!result) {
+//        if(!userRepository.existsByEmail(email, loginType)) {
+//        if(!userRepository.existsByEmail(email)) { // 동일한 이메일이 없으면 DB에 신규 등록
             // username, password, nickname, sp_record, login_type, rabbit_type
+            System.out.println("어디로 오는거임1");
             String[] rabbit_array = {"hj1", "je1", "jk1", "mj1", "yr1"};
             List<String> rabbit_list = Arrays.asList(rabbit_array);
             Collections.shuffle(rabbit_list);
             rabbit_list.toArray(rabbit_array);
             String rabbit = rabbit_array[0];
+            id += loginType;
 
             user.setUsername(id); // 회원 아이디 
             user.setToken(tokenCode); // 토큰
             user.setNickname(name); // 닉네임
             user.setRabbitType(rabbit); // 토끼 유형 세팅
-            user.setEmail(email); // 구글 로그인 이메일
-            user.setSpRecord(0); // 송편 개수 0
-            user.setLoginType("G"); // 구글 가입 유형 "G"
+            user.setEmail(email); // 로그인 이메일
+            user.setSpRecord(0); // 송편 개수
+            user.setLoginType(loginType); // 가입 유형
             System.out.println(user);
             userRepository.save(user);
             log.info("[OAuthService][GoogleSocialLogin] userInfo : {}", user);
         }
         else { // 이미 가입된 상태면
-            // 로그인 처리는 시큐리티가 자동으로 해주는걸
-            user = userRepository.findByEmail(email);
+            System.out.println("어디로 오는거임2");
+            // 로그인 처리는 시큐리티가 자동
+            // find는 List로 반환, findOne은 첫번째 요소 1행만 반환
+            user = mongoTemplate.findOne(query, UserModel.class);
+            log.info("[OAuthService][GoogleSocialLogin] user : {}", user);
         }
         return user;
     }

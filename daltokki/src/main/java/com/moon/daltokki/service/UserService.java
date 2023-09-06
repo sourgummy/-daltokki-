@@ -5,6 +5,8 @@ import com.moon.daltokki.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -63,16 +65,58 @@ public class UserService {
   }
   
   // 사용자의 토큰 조회
-  public String selectToken(String email) {
-    log.info("[Service][selectToken] selected tokencode : {}", email);
+//  public String selectToken(String email) {
+//    log.info("[Service][selectToken] selected tokencode : {}", email);
+//
+////    UserModel user = userRepository.findByEmail(email);
+//
+//    // ---------------------- 테스트
+//    Criteria criteria = new Criteria();
+//    criteria.andOperator(
+//            Criteria.where("email").is(email),
+//            Criteria.where("loginType").is(loginType)
+//    );
+//
+//    Query query = new Query(criteria);
+//    log.info("[OAuthService][GoogleSocialLogin] query : {}", query);
+//
+//    List<UserModel> resultList = mongoTemplate.find(query, UserModel.class);
+//    log.info("[OAuthService][GoogleSocialLogin] result : {}", result);
+//    // --------------------- 테스트
+//
+//    if (user.getToken() != null) {
+//      return user.getToken();
+//    }
+//
+//    return null; // 해당 이메일에 해당하는 유저가 없는 경우
+//  }
 
-    UserModel user = userRepository.findByEmail(email);
+  public String selectToken(String email, String loginType) {
+    System.out.println("selectToken");
+    log.info("[UserService][selectToken] selected email : {}", email);
+    log.info("[UserService][selectToken] selected loginType : {}", loginType);
 
-    if (user.getToken() != null) {
-      return user.getToken();
+    Criteria criteria = new Criteria();
+    criteria.andOperator(
+            Criteria.where("email").is(email),
+            Criteria.where("loginType").is(loginType)
+    );
+
+    Query query = new Query(criteria);
+    log.info("[UserService][selectToken] query : {}", query);
+
+    List<UserModel> resultList = mongoTemplate.find(query, UserModel.class);
+    log.info("[UserService][selectToken] result : {}", resultList);
+    // --------------------- 테스트
+
+    if (!resultList.isEmpty()) {
+      UserModel user = resultList.get(0);
+      if (user.getToken() != null) {
+        return user.getToken();
+      }
     }
 
-    return null; // 해당 이메일에 해당하는 유저가 없는 경우
+    return null;
   }
   // ----------------- 지은 0901 갱신 -------------------
 

@@ -103,8 +103,6 @@ public class OAuthController {
     @Autowired
     private OAuthService oAuthService;
 
-    // 아니 로그인은 되는데 시큐리티에 세션이 안넘어감.. 하..
-    // -> 시큐리티에는 토큰이 저장되는데 id랑 비교를 하고 있었으니까 ^ㅅ^.. 히밣.. 디버깅 열심히 해요..
     @GetMapping("/googleLogin")
     public String googleLoginSuccess(Authentication authentication, Model model) {
         if (authentication instanceof OAuth2AuthenticationToken) {
@@ -122,7 +120,6 @@ public class OAuthController {
 //            model.addAttribute("tokenCode", tokenCode);
 //            log.info("[OAuthController][googleLogin] model_tokenCode : {}", model.getAttribute("tokenCode")); // null
 
-            // model이 안넘어가는건가..?
             return "redirect:/main?id=" + GoogleLoginId;
         }
         // 로그인 실패 시 로그인 폼 페이지로 이동

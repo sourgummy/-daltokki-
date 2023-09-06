@@ -62,6 +62,7 @@ body.modal-open {
 }
 
 /* Flexbox 레이아웃 설정 */
+/* 송편 지울 때 레이아웃 망가짐 */
 .box .row {
     display: flex;
     flex-wrap: wrap;
