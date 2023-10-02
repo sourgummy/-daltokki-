@@ -5,14 +5,14 @@
 <div th:fragment="headerFragment">
 
   <div>
-    <img th:src="@{'/img/daltokki2.png'}" id="mainImg">
+    <img th:src="@{'/img/daltokki2.png'}" id="mainImg" th:onclick="|location.href='@{main(id=${sp.spRecipient})}'|">
   </div>
   <!--  알림 : 나한테 쌓인 송편 몇개인지
   통계 : 어떤앙꼬가 몇개 어떤색송편이 몇개-->
   <!--알림모달버튼-->
   <div>
     <button type="button" class="btn btn-primary" id="noti_btn" data-bs-toggle="modal" onclick="modalOpen()">
-      <img th:src="@{'/img/icon/bar.png'}" width="50px" height="50px">
+      <img th:src="@{'/img/icon/bar.png'}" width="30px" height="30px">
     </button>
 
 

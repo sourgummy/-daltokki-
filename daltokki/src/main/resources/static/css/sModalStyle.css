@@ -1,0 +1,24 @@
+.modal-content {
+    background-image: url('/img/modal.jpg');
+}
+
+#headerModal{
+    position: absolute;
+    left: auto;
+    top: 50px;
+    width: 400px;
+    height: 250px;
+    overflow: hidden;
+}
+
+#headerModalBody{
+    height: 300px;
+}
+
+#headerModalTable td {
+    clear: both;
+}
+
+#headerModalTable {
+    clear: both;
+}

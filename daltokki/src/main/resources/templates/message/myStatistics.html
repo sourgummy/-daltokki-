@@ -7,8 +7,8 @@
   <title>myStatistics</title>
   <style>
     th img {
-      width : 150px;
-      height : 150px;
+      width : 100px;
+      height : 100px;
     }
     #bodySection {
       background-color : #212539;
@@ -19,15 +19,17 @@
     table {
       margin : auto;
     }
+    body {
+      overflow: hidden;
+     }
   </style>
 </head>
 <!-- Content -->
 <body layout:fragment="content">
 
 
-<div id="bodySection">
-  <h1 th:text="${sp.spRecipient}" id="spId"></h1>
-  <hr>
+<div class="container" id="bodySection">
+  <h1 th:inline="text"><span th:text="${sp.spRecipient}" id="spId"></span>님의 송편</h1>
   <h3>송편</h3>
     <table>
       <tr>

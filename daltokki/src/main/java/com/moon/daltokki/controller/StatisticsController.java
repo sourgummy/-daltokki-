@@ -79,7 +79,8 @@ public class StatisticsController {
 
   @ResponseBody
   @GetMapping(value = "/ajaxAlarm")
-  public void alarm(Model model, HttpServletResponse response, @RequestParam String spId) {
+  public void alarm(Model model,
+                    HttpServletResponse response, @RequestParam String spId) {
     List<StatisticsModel> newList = statisticsService.selectStatistics(spId);
 
     JSONArray jsonArray = new JSONArray();

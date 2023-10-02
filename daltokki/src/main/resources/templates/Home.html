@@ -65,7 +65,19 @@
     });
     // ----------------------miju(08/18 추가)-------------------------------
 </script>
+<style>
+    #s_btn{
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background-color: #ffffff00;
+      border: none;
+    }
+</style>
 <body>
+    <button type="button" class="btn btn-primary" id="s_btn" th:onclick="|location.href='@{myStatistics(id=${param.id})}'|">
+        <img th:src="@{'/img/icon/settingIcon.png'}" width="30px" height="30px">
+    </button>
     <div class="container">
         <h1 th:inline="text"><span th:text="${param.id}"></span>님의 메인</h1>
         <img th:src="@{'/img/' + ${userInfo.get().rabbitType} + '.png'}" width="100px" height="100px">

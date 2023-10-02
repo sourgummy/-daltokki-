@@ -8,7 +8,7 @@
   <!-- 이 영역에 공통으로 사용할 css, js library를 선언한다. -->
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   <link rel="stylesheet" th:href="@{/css/style.css}" >
-<!--  <link rel="stylesheet" th:href="@{/css/modalStyle.css}" >-->
+  <link rel="stylesheet" th:href="@{/css/sModalStyle.css}" >
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
@@ -21,43 +21,36 @@
       border: none;
     }
 
-    #headerModal{
-      position: absolute;
-      left: auto;
-      top: 100px;
-      width: 500px;
-      height: 250px;
-      color : black;
-    }
-
-    #headerModalBody{
-      height: 150px;
-      color : black;
-    }
-
     #close_btn, #refresh_btn {
       background-color: #ffffff00;
       border: none;
       float: right;
     }
 
+    #close_btn {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+
+    #refresh_btn {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+    }
+
     #mainImg {
-      width : 300px;
-      height : 300px;
+      vertical-align: middle;
+      margin-top: 20px;
+      width : 150px;
+      height : 150px;
     }
 
     #footerSection {
       background-color : #212539;
     }
 
-    #headerModalTable td {
-      color: black;
-      clear: both;
-    }
 
-    #headerModalTable {
-      clear: both;
-    }
 
   </style>
 
